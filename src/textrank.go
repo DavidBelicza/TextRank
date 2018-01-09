@@ -1,0 +1,5 @@
+package textrank
+
+func AddText() {
+
+}
