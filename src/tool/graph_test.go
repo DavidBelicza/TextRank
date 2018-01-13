@@ -17,8 +17,8 @@ func TestGraph(t *testing.T) {
 		2,
 	}
 
-	words := []Word{}
-	words = append(words, word)
+	words := make(map[string]Word)
+	words["apple"] = word
 
 	sentence := Sentence{
 		1,
@@ -33,6 +33,6 @@ func TestGraph(t *testing.T) {
 		words,
 	}
 
-	assert.EqualValues(t, "apple", graph.Words[0].Value)
-	assert.EqualValues(t, graph.Sentences[0].ID, graph.Words[0].SentenceIDs[0])
+	assert.EqualValues(t, "apple", graph.Words["apple"].Value)
+	assert.EqualValues(t, graph.Sentences[0].ID, graph.Words["apple"].SentenceIDs[0])
 }

@@ -3,7 +3,7 @@ package tool
 // Graph data object carries words and the original sentences.
 type Graph struct {
 	Sentences []Sentence
-	Words     []Word
+	Words     map[string]Word
 }
 
 // Sentence struct contains the original sentences and their IDs.
