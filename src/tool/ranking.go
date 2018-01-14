@@ -1,25 +1,11 @@
 package tool
 
-func Rank(sentence ParsedSentence) {
-	for _, word := range sentence.GetWords() {
-		updateGraph(word)
-	}
-}
+var rankGraph *Graph
 
-func updateGraph(word string) {
+func Run(currenGraph Graph) {
+	rankGraph = &currenGraph
 
-}
-
-func isWordExist() {
-
-}
-
-func addSentence() {
-
-}
-
-func addWord() {
-
+	updateRanks()
 }
 
 func updateRanks() {

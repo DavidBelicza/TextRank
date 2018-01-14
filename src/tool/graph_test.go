@@ -7,7 +7,7 @@ import (
 )
 
 func TestGraph(t *testing.T) {
-	word := Word{
+	word := &Word{
 		0,
 		[]int{1},
 		[]int{2, 5},
@@ -17,8 +17,11 @@ func TestGraph(t *testing.T) {
 		2,
 	}
 
-	words := make(map[string]Word)
-	words["apple"] = word
+	words := make(map[int]*Word)
+	words[0] = word
+
+	wordValIDs := make(map[string]int)
+	wordValIDs["apple"] = 0
 
 	sentence := Sentence{
 		1,
@@ -31,8 +34,10 @@ func TestGraph(t *testing.T) {
 	graph := Graph{
 		sentences,
 		words,
+		wordValIDs,
 	}
 
-	assert.EqualValues(t, "apple", graph.Words["apple"].Value)
-	assert.EqualValues(t, graph.Sentences[0].ID, graph.Words["apple"].SentenceIDs[0])
+	assert.EqualValues(t, "apple", graph.Words[0].Value)
+	assert.EqualValues(t, graph.Sentences[0].ID, graph.Words[0].SentenceIDs[0])
+	assert.EqualValues(t, 0, graph.WordValID["apple"])
 }
