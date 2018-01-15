@@ -2,8 +2,8 @@ package tool
 
 var graph *Graph
 
-func Convert(sentence ParsedSentence, currenGraph Graph) {
-	graph = &currenGraph
+func Convert(sentence ParsedSentence, currenGraph *Graph) {
+	graph = currenGraph
 
 	addSentence(sentence)
 	addWord(sentence.GetWords())
