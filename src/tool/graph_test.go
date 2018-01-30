@@ -7,11 +7,19 @@ import (
 )
 
 func TestGraph(t *testing.T) {
+	connectionLeft := make(map[int]int)
+	connectionLeft[2] = 1
+	connectionLeft[5] = 3
+
+	connectionRight := make(map[int]int)
+	connectionRight[65] = 4
+	connectionRight[74] = 12
+
 	word := &Word{
 		0,
 		[]int{1},
-		[]int{2, 5},
-		[]int{65, 74},
+		connectionLeft,
+		connectionRight,
 		"apple",
 		0.000005,
 		2,

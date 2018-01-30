@@ -2,8 +2,8 @@ package tool
 
 var graph *Graph
 
-func Convert(sentence ParsedSentence, currenGraph *Graph) {
-	graph = currenGraph
+func Convert(sentence ParsedSentence, currentGraph *Graph) {
+	graph = currentGraph
 
 	addSentence(sentence)
 	addWord(sentence.GetWords())
@@ -23,8 +23,6 @@ func addWord(words []string) {
 		graph.UpdateRightConnection(prevWordID, curWordID)
 		curWordID = prevWordID
 	}
-
-	updateRanks()
 }
 
 func addSentence(sentence ParsedSentence) {

@@ -25,11 +25,21 @@ type Sentence struct {
 type Word struct {
 	ID              int
 	SentenceIDs     []int
-	ConnectionLeft  []int
-	ConnectionRight []int
+	ConnectionLeft  map[int]int
+	ConnectionRight map[int]int
 	Value           string
-	Score           float32
+	Score           float64
 	Count           int
+}
+
+//@todo struct to store connection based scores [word1][word2] = 5 connection OR add connectionScore field to Word struct and mirror update
+
+func NewGraph() *Graph {
+	return &Graph{
+		[]Sentence{},
+		make(map[int]*Word),
+		make(map[string]int),
+	}
 }
 
 func (graph *Graph) IsWordExist(word string) bool {
@@ -41,17 +51,17 @@ func (graph *Graph) IsWordExist(word string) bool {
 func (graph *Graph) AddNewWord(word string, prevWordIdx int) (wordID int) {
 	sentenceID := len(graph.Sentences)
 	wordID = len(graph.Words)
-	connectionLeft := []int{}
+	connectionLeft := make(map[int]int)
 
 	if prevWordIdx >= 0 {
-		connectionLeft = []int{prevWordIdx}
+		connectionLeft[prevWordIdx] = 1
 	}
 
 	newWord := &Word{
 		ID:              wordID,
 		SentenceIDs:     []int{sentenceID},
 		ConnectionLeft:  connectionLeft,
-		ConnectionRight: []int{},
+		ConnectionRight: make(map[int]int),
 		Value:           word,
 		Score:           0,
 		Count:           1,
@@ -80,10 +90,7 @@ func (graph *Graph) UpdateWord(word string, prevWordIdx int) (wordID int) {
 	}
 
 	if prevWordIdx >= 0 {
-		graph.Words[wordID].ConnectionLeft = append(
-			graph.Words[wordID].ConnectionLeft,
-			prevWordIdx,
-		)
+		graph.Words[wordID].ConnectionLeft[prevWordIdx] += 1
 	}
 
 	return
@@ -91,7 +98,10 @@ func (graph *Graph) UpdateWord(word string, prevWordIdx int) (wordID int) {
 
 func (graph *Graph) UpdateRightConnection(wordID int, rightWordID int) {
 	if wordID >= 0 {
-		word := graph.Words[wordID]
-		word.ConnectionRight = append(word.ConnectionRight, rightWordID)
+		graph.Words[wordID].ConnectionRight[rightWordID] += 1
 	}
+}
+
+func (graph *Graph) GetWordData() map[int]*Word {
+	return graph.Words
 }
