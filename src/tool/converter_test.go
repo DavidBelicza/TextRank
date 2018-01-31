@@ -18,18 +18,18 @@ func TestConvert(t *testing.T) {
 		[]string{"It", "has", "an", "apple", "tree"},
 	)
 
-	graph := Graph{
+	rank := Rank{
+		make(map[int]map[int]float64),
 		[]Sentence{},
 		make(map[int]*Word),
 		make(map[string]int),
 	}
 
-	Convert(text.GetSentences()[0], &graph)
-	Convert(text.GetSentences()[1], &graph)
+	Convert(text.GetSentences()[0], &rank)
+	Convert(text.GetSentences()[1], &rank)
 
-	id := graph.WordValID["tree"]
+	id := rank.WordValID["tree"]
 
 	assert.True(t, id > 0)
-	assert.EqualValues(t, 2, graph.Words[id].Count)
-	assert.EqualValues(t, 2, len(graph.Sentences))
+	assert.EqualValues(t, 2, len(rank.Sentences))
 }

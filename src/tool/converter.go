@@ -1,9 +1,9 @@
 package tool
 
-var graph *Graph
+var rank *Rank
 
-func Convert(sentence ParsedSentence, currentGraph *Graph) {
-	graph = currentGraph
+func Convert(sentence ParsedSentence, currentRank *Rank) {
+	rank = currentRank
 
 	addSentence(sentence)
 	addWord(sentence.GetWords())
@@ -14,22 +14,22 @@ func addWord(words []string) {
 	curWordID := -1
 
 	for _, word := range words {
-		if !graph.IsWordExist(word) {
-			curWordID = graph.AddNewWord(word, prevWordID)
+		if !rank.IsWordExist(word) {
+			curWordID = rank.AddNewWord(word, prevWordID)
 		} else {
-			curWordID = graph.UpdateWord(word, prevWordID)
+			curWordID = rank.UpdateWord(word, prevWordID)
 		}
 
-		graph.UpdateRightConnection(prevWordID, curWordID)
+		rank.UpdateRightConnection(prevWordID, curWordID)
 		curWordID = prevWordID
 	}
 }
 
 func addSentence(sentence ParsedSentence) {
 	newSentence := Sentence{
-		ID:   len(graph.Sentences),
+		ID:   len(rank.Sentences),
 		Text: sentence.GetOriginal(),
 	}
 
-	graph.Sentences = append(graph.Sentences, newSentence)
+	rank.Sentences = append(rank.Sentences, newSentence)
 }

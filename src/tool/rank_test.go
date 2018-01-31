@@ -21,8 +21,6 @@ func TestGraph(t *testing.T) {
 		connectionLeft,
 		connectionRight,
 		"apple",
-		0.000005,
-		2,
 	}
 
 	words := make(map[int]*Word)
@@ -39,13 +37,14 @@ func TestGraph(t *testing.T) {
 	sentences := []Sentence{}
 	sentences = append(sentences, sentence)
 
-	graph := Graph{
+	rank := Rank{
+		make(map[int]map[int]float64),
 		sentences,
 		words,
 		wordValIDs,
 	}
 
-	assert.EqualValues(t, "apple", graph.Words[0].Value)
-	assert.EqualValues(t, graph.Sentences[0].ID, graph.Words[0].SentenceIDs[0])
-	assert.EqualValues(t, 0, graph.WordValID["apple"])
+	assert.EqualValues(t, "apple", rank.Words[0].Value)
+	assert.EqualValues(t, rank.Sentences[0].ID, rank.Words[0].SentenceIDs[0])
+	assert.EqualValues(t, 0, rank.WordValID["apple"])
 }
