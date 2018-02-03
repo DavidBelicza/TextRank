@@ -1,4 +1,4 @@
-package tool
+package parse
 
 import (
 	"testing"
@@ -7,7 +7,7 @@ import (
 )
 
 func TestParse(t *testing.T) {
-	parsedText := Parse("Hello World! Now, this     is a sentence! ")
+	parsedText := TokenizeText("Hello World! Now, this     is a sentence! ")
 
 	assert.Equal(t, 2, len(parsedText.GetSentences()), "Sentence count")
 	assert.Equal(t, 2, len(parsedText.GetSentences()[0].GetWords()), "Word count")
@@ -17,7 +17,7 @@ func TestParse(t *testing.T) {
 	assert.Equal(t, "Now", parsedText.GetSentences()[1].GetWords()[0])
 	assert.Equal(t, "sentence", parsedText.GetSentences()[1].GetWords()[4])
 
-	parsedText2 := Parse("This is a sentence without mark")
+	parsedText2 := TokenizeText("This is a sentence without mark")
 
 	assert.Equal(t, 6, len(parsedText2.GetSentences()[0].GetWords()))
 }

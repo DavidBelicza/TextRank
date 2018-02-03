@@ -1,5 +1,9 @@
 package textrank
 
-func AddText() {
+func AddText(text string, id int) {
+
+}
+
+func GetRank(id int)  {
 
 }

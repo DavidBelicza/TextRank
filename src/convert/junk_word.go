@@ -1,4 +1,4 @@
-package tool
+package convert
 
 //@todo list of junk words
 func IsJunkWord(word string) bool {

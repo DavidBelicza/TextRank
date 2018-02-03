@@ -1,13 +1,15 @@
-package tool
+package convert
 
 import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"parse"
+	"rank"
 )
 
 func TestConvert(t *testing.T) {
-	text := Text{}
+	text := parse.Text{}
 	text.Append(
 		"There is a tree in the forest.",
 		[]string{"There", "is", "apple", "tree", "in", "the", "forest"},
@@ -18,25 +20,25 @@ func TestConvert(t *testing.T) {
 		[]string{"It", "has", "an", "apple", "tree"},
 	)
 
-	rank := Rank{
+	curRank := rank.Rank{
 		0,
 		0,
-		Relation{
+		rank.Relation{
 			0,
 			0,
-			make(map[int]map[int]Score),
+			make(map[int]map[int]rank.Score),
 		},
-		[]Sentence{},
-		make(map[int]*Word),
+		[]rank.Sentence{},
+		make(map[int]*rank.Word),
 		make(map[string]int),
 	}
 
-	Convert(text.GetSentences()[0], &rank)
-	Convert(text.GetSentences()[1], &rank)
+	TextToRank(text.GetSentences()[0], &curRank)
+	TextToRank(text.GetSentences()[1], &curRank)
 
-	id := rank.WordValID["tree"]
+	id := curRank.WordValID["tree"]
 
 	assert.True(t, id > 0)
-	assert.EqualValues(t, 2, len(rank.Sentences))
+	assert.EqualValues(t, 2, len(curRank.Sentences))
 
 }

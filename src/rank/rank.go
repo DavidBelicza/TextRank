@@ -1,4 +1,4 @@
-package tool
+package rank
 
 type Rank struct {
 	Max       int
@@ -7,17 +7,6 @@ type Rank struct {
 	Sentences []Sentence
 	Words     map[int]*Word
 	WordValID map[string]int
-}
-
-type Relation struct {
-	Max    int
-	Min    int
-	Scores map[int]map[int]Score
-}
-
-type Score struct {
-	Qty    int
-	Weight float32
 }
 
 type Sentence struct {
@@ -46,57 +35,6 @@ func NewRank() *Rank {
 		[]Sentence{},
 		make(map[int]*Word),
 		make(map[string]int),
-	}
-}
-
-func (rank *Rank) AddRelation(wordID int, relatedWordID int) {
-	count := 0
-
-	if relatedWordID == -1 {
-		return
-	}
-
-	if _, ok := rank.Relation.Scores[relatedWordID][wordID]; ok {
-		count = rank.Relation.Scores[relatedWordID][wordID].Qty + 1
-		rank.Relation.Scores[relatedWordID][wordID] = Score{count, 0}
-
-		return
-	}
-
-	if _, ok := rank.Relation.Scores[wordID][relatedWordID]; ok {
-		count = rank.Relation.Scores[wordID][relatedWordID].Qty + 1
-		rank.Relation.Scores[wordID][relatedWordID] = Score{count, 0}
-
-		return
-
-	}
-
-	if _, ok := rank.Relation.Scores[wordID]; ok {
-		count = 1
-		rank.Relation.Scores[wordID][relatedWordID] = Score{count, 0}
-
-		return
-	}
-
-	if _, ok := rank.Relation.Scores[relatedWordID]; ok {
-		count = 1
-		rank.Relation.Scores[relatedWordID][wordID] = Score{count, 0}
-
-		return
-	}
-
-	count = 1
-	rank.Relation.Scores[wordID] = map[int]Score{}
-	rank.Relation.Scores[wordID][relatedWordID] = Score{count, 0}
-
-	return
-}
-
-func (rank *Rank) UpdateRelatedMinMax(value int) {
-	if rank.Relation.Max < value {
-		rank.Relation.Max = value
-	} else if rank.Relation.Min > value {
-		rank.Relation.Min = value
 	}
 }
 

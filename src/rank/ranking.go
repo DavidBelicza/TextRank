@@ -1,19 +1,16 @@
-package tool
+package rank
 
-import (
-	"fmt"
-)
+import "fmt"
 
 var rankGraph *Rank
 
-func Run(currentGraph *Rank) {
+func Calculate(currentGraph *Rank) {
 	rankGraph = currentGraph
 
 	updateRanks()
 }
 
 func updateRanks() {
-
 	for x, xMap := range rankGraph.Relation.Scores {
 		for y, _ := range xMap {
 			qty := rankGraph.Relation.Scores[x][y].Qty
@@ -37,22 +34,6 @@ func updateRanks() {
 	}
 
 	fmt.Println(rankGraph.Relation.Scores)
-
-	/*for x, _ := range rankGraph.Relation.Scores {
-		for y, _ := range rankGraph.Relation.Scores {
-			//fmt.Println(rankGraph.Words[x].Value + ", " + rankGraph.Words[y].Value)
-			//fmt.Println(rankGraph.Relation.Scores[x][y])
-		}
-	}*/
-
-	//@todo float32 instead of float64 or integer everywhere
-
-
-	/*for _, word := range rankGraph.GetWordData() {
-		for wordID, count := range word.ConnectionLeft {
-
-		}
-	}*/
 }
 
 func weighting(qty int, min int, max int) float32  {

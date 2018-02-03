@@ -1,11 +1,10 @@
-package tool
+package parse
 
 //@todo compare rune with rune instead of string mess
 var wordSeparators = [2]string{" ", ","}
 var sentenceSeparators = [3]string{"!", ".", "?"}
 
-// Parse Parsing a raw text into a Text struct.
-func Parse(rawText string) Text {
+func TokenizeText(rawText string) Text {
 	return findSentences(rawText)
 }
 

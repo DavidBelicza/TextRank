@@ -1,4 +1,6 @@
 /.vscode
 /.idea
+/pkg
+/bin
 /vendor
 /run.sh

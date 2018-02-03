@@ -1,4 +1,4 @@
-package tool
+package parse
 
 // Text The container of the parsed sentences.
 type Text struct {

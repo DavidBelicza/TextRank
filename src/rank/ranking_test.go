@@ -1,19 +1,20 @@
-package tool
+package rank
 
 import (
-	"testing"
-
 	"github.com/stretchr/testify/assert"
+	"testing"
+	"convert"
+	"parse"
 )
 
 func TestRun(t *testing.T) {
 	graphi := NewRank()
-	parsedText := Parse("The red apple is good. good is the best for us in case of apple.")
+	parsedText := parse.TokenizeText("The red apple is good. good is the best for us in case of apple.")
 	for _, sentence := range parsedText.GetSentences() {
-		Convert(sentence, graphi)
+		convert.TextToRank(sentence, graphi)
 	}
 
-	Run(graphi)
+	Calculate(graphi)
 	/*for _, word := range graphi.GetWordData() {
 		fmt.Println(word.Value)
 		//fmt.Println(word.Value + " " + strconv.FormatFloat(word., 'f', -1, 64))
