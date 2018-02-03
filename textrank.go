@@ -1,4 +1,4 @@
-package textrank
+package src
 
 func AddText(text string, id int) {
 
