@@ -10,7 +10,7 @@ func TestConvert(t *testing.T) {
 	text := Text{}
 	text.Append(
 		"There is a tree in the forest.",
-		[]string{"There", "is", "a", "tree", "in", "the", "forest"},
+		[]string{"There", "is", "apple", "tree", "in", "the", "forest"},
 	)
 
 	text.Append(
@@ -19,7 +19,13 @@ func TestConvert(t *testing.T) {
 	)
 
 	rank := Rank{
-		make(map[int]map[int]float64),
+		0,
+		0,
+		Relation{
+			0,
+			0,
+			make(map[int]map[int]Score),
+		},
 		[]Sentence{},
 		make(map[int]*Word),
 		make(map[string]int),
@@ -32,4 +38,5 @@ func TestConvert(t *testing.T) {
 
 	assert.True(t, id > 0)
 	assert.EqualValues(t, 2, len(rank.Sentences))
+
 }

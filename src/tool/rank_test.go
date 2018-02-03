@@ -38,7 +38,13 @@ func TestGraph(t *testing.T) {
 	sentences = append(sentences, sentence)
 
 	rank := Rank{
-		make(map[int]map[int]float64),
+		0,
+		0,
+		Relation{
+			0,
+			0,
+			make(map[int]map[int]Score),
+		},
 		sentences,
 		words,
 		wordValIDs,

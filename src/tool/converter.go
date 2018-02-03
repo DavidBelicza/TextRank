@@ -14,14 +14,19 @@ func addWord(words []string) {
 	curWordID := -1
 
 	for _, word := range words {
-		if !rank.IsWordExist(word) {
-			curWordID = rank.AddNewWord(word, prevWordID)
-		} else {
-			curWordID = rank.UpdateWord(word, prevWordID)
-		}
+		//if !IsJunkWord(word) {
+		if true {
+			if !rank.IsWordExist(word) {
+				curWordID = rank.AddNewWord(word, prevWordID)
+			} else {
+				curWordID = rank.UpdateWord(word, prevWordID)
+			}
 
-		rank.UpdateRightConnection(prevWordID, curWordID)
-		curWordID = prevWordID
+			rank.AddRelation(curWordID, prevWordID)
+			rank.UpdateRightConnection(prevWordID, curWordID)
+
+			prevWordID = curWordID
+		}
 	}
 }
 
