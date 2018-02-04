@@ -11,8 +11,8 @@ func Calculate(currentGraph *Rank) {
 }
 
 type Phrase struct {
-	Word1  string
-	Word2  string
+	Right  string
+	Left  string
 	Weight float32
 	Qty    int
 }

@@ -10,13 +10,13 @@ import (
 var provider = make(map[int]*rank.Rank)
 
 func AddText(text string, lang string, id int) {
-	var textRank *rank.Rank
+	var ranks *rank.Rank
 
 	if savedTextRank, ok := provider[id]; ok {
-		textRank = savedTextRank
+		ranks = savedTextRank
 	} else {
-		textRank = rank.NewRank()
-		provider[id] = textRank
+		ranks = rank.NewRank()
+		provider[id] = ranks
 	}
 
 	language := convert.NewLanguage()
@@ -27,7 +27,9 @@ func AddText(text string, lang string, id int) {
 	for _, sentence := range parsedText.GetSentences() {
 		convert.TextToRank(sentence, language, provider[id])
 	}
+}
 
+func Caculate(id int) {
 	rank.Calculate(provider[id])
 }
 

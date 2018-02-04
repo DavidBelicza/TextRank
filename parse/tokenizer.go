@@ -1,6 +1,10 @@
 package parse
 
-var wordSeparators = [2]string{" ", ","}
+import (
+	"strings"
+)
+
+var wordSeparators = [10]string{" ", ",", ")", "(", "[", "]", "{", "}", "\"", ";"}
 var sentenceSeparators = [3]string{"!", ".", "?"}
 
 func TokenizeText(rawText string) Text {
@@ -40,13 +44,13 @@ func findWords(rawSentence string) (words []string) {
 		if !isWordSeparator(chr) {
 			word = word + string(chr)
 		} else if len(word) > 0 {
-			words = append(words, word)
+			words = append(words, strings.ToLower(word))
 			word = ""
 		}
 	}
 
 	if len(word) > 0 {
-		words = append(words, word)
+		words = append(words, strings.ToLower(word))
 	}
 
 	return
