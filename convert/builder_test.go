@@ -33,9 +33,6 @@ func TestConvert(t *testing.T) {
 		make(map[string]int),
 	}
 
-	TextToRank(text.GetSentences()[0], &curRank)
-	TextToRank(text.GetSentences()[1], &curRank)
-
 	id := curRank.WordValID["tree"]
 
 	assert.True(t, id > 0)

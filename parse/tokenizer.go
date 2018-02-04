@@ -1,6 +1,5 @@
 package parse
 
-//@todo compare rune with rune instead of string mess
 var wordSeparators = [2]string{" ", ","}
 var sentenceSeparators = [3]string{"!", ".", "?"}
 
