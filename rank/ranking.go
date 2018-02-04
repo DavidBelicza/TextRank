@@ -2,12 +2,8 @@ package rank
 
 import "sort"
 
-var rankGraph *Rank
-
-func Calculate(currentGraph *Rank) {
-	rankGraph = currentGraph
-
-	updateRanks()
+func Calculate(ranks *Rank) {
+	updateRanks(ranks)
 }
 
 type Phrase struct {
@@ -38,26 +34,26 @@ func GetPhrases(rank *Rank) []Phrase {
 	return phrases
 }
 
-func updateRanks() {
-	for x, xMap := range rankGraph.Relation.Scores {
+func updateRanks(ranks *Rank) {
+	for x, xMap := range ranks.Relation.Scores {
 		for y, _ := range xMap {
-			qty := rankGraph.Relation.Scores[x][y].Qty
+			qty := ranks.Relation.Scores[x][y].Qty
 
-			if rankGraph.Relation.Max < qty {
-				rankGraph.Relation.Max = qty
+			if ranks.Relation.Max < qty {
+				ranks.Relation.Max = qty
 			}
 
-			if rankGraph.Relation.Min > qty || rankGraph.Relation.Min == 0 {
-				rankGraph.Relation.Min = qty
+			if ranks.Relation.Min > qty || ranks.Relation.Min == 0 {
+				ranks.Relation.Min = qty
 			}
 		}
 	}
 
-	for x, xMap := range rankGraph.Relation.Scores {
+	for x, xMap := range ranks.Relation.Scores {
 		for y, _ := range xMap {
-			qty := rankGraph.Relation.Scores[x][y].Qty
-			weight := weighting(qty, rankGraph.Relation.Min, rankGraph.Relation.Max)
-			rankGraph.Relation.Scores[x][y] = Score{rankGraph.Relation.Scores[x][y].Qty, weight}
+			qty := ranks.Relation.Scores[x][y].Qty
+			weight := weighting(qty, ranks.Relation.Min, ranks.Relation.Max)
+			ranks.Relation.Scores[x][y] = Score{ranks.Relation.Scores[x][y].Qty, weight}
 		}
 	}
 }

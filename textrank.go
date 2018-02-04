@@ -29,7 +29,7 @@ func AddText(text string, lang string, id int) {
 	}
 }
 
-func Caculate(id int) {
+func Calculate(id int) {
 	rank.Calculate(provider[id])
 }
 

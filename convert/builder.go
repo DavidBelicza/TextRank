@@ -5,40 +5,36 @@ import (
 	"parse"
 )
 
-var curRank *rank.Rank
-
-func TextToRank(sentence parse.ParsedSentence, lang *Language, currentRank *rank.Rank) {
-	curRank = currentRank
-
-	addSentence(sentence)
-	addWord(sentence.GetWords(), lang)
+func TextToRank(sentence parse.ParsedSentence, lang *Language, ranks *rank.Rank) {
+	addSentence(ranks, sentence)
+	addWord(ranks, sentence.GetWords(), lang)
 }
 
-func addWord(words []string, lang *Language) {
+func addWord(ranks *rank.Rank, words []string, lang *Language) {
 	prevWordID := -1
 	curWordID := -1
 
 	for _, word := range words {
 		if !lang.IsStopWord(word) {
-			if !curRank.IsWordExist(word) {
-				curWordID = curRank.AddNewWord(word, prevWordID)
+			if !ranks.IsWordExist(word) {
+				curWordID = ranks.AddNewWord(word, prevWordID)
 			} else {
-				curWordID = curRank.UpdateWord(word, prevWordID)
+				curWordID = ranks.UpdateWord(word, prevWordID)
 			}
 
-			curRank.Relation.AddRelation(curWordID, prevWordID)
-			curRank.UpdateRightConnection(prevWordID, curWordID)
+			ranks.Relation.AddRelation(curWordID, prevWordID)
+			ranks.UpdateRightConnection(prevWordID, curWordID)
 
 			prevWordID = curWordID
 		}
 	}
 }
 
-func addSentence(sentence parse.ParsedSentence) {
+func addSentence(ranks *rank.Rank, sentence parse.ParsedSentence) {
 	newSentence := rank.Sentence{
-		ID:   len(curRank.Sentences),
+		ID:   len(ranks.Sentences),
 		Text: sentence.GetOriginal(),
 	}
 
-	curRank.Sentences = append(curRank.Sentences, newSentence)
+	ranks.Sentences = append(ranks.Sentences, newSentence)
 }
