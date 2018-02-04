@@ -21,6 +21,8 @@ func TestGraph(t *testing.T) {
 		connectionLeft,
 		connectionRight,
 		"apple",
+		1,
+		0,
 	}
 
 	words := make(map[int]*Word)
