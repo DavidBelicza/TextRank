@@ -8,21 +8,21 @@ func Calculate(ranks *Rank) {
 
 type Phrase struct {
 	Right  string
-	Left  string
+	Left   string
 	Weight float32
 	Qty    int
 }
 
-func GetPhrases(rank *Rank) []Phrase {
+func GetPhrases(ranks *Rank) []Phrase {
 	var phrases []Phrase
 
-	for x, xMap := range rank.Relation.Scores {
+	for x, xMap := range ranks.Relation.Scores {
 		for y, _ := range xMap {
 			phrases = append(phrases, Phrase{
-				rank.Words[x].Value,
-				rank.Words[y].Value,
-				rank.Relation.Scores[x][y].Weight,
-				rank.Relation.Scores[x][y].Qty,
+				ranks.Words[x].Value,
+				ranks.Words[y].Value,
+				ranks.Relation.Scores[x][y].Weight,
+				ranks.Relation.Scores[x][y].Qty,
 			})
 		}
 	}
@@ -32,6 +32,40 @@ func GetPhrases(rank *Rank) []Phrase {
 	})
 
 	return phrases
+}
+
+type SingleWord struct {
+	Word   string
+	Weight float32
+	Qty    int
+}
+
+func GetSingleWords(ranks *Rank) []SingleWord {
+	var singleWords []SingleWord
+
+	for _, word := range ranks.Words {
+		singleWords = append(singleWords, SingleWord{
+			word.Value,
+			word.Weight,
+			word.Qty,
+		})
+	}
+
+	sort.Slice(singleWords, func(i, j int) bool {
+		return singleWords[i].Weight > singleWords[j].Weight
+	})
+
+	return singleWords
+}
+
+//@todo
+func GetSentences(ranks *Rank, kind int) {
+	// by score - relations weights or word qtys
+}
+
+//@todo
+func GetSentencesByPhrases() {
+	// [w1, w2], [w1, w2], [w1], [w1, w2]
 }
 
 func updateRanks(ranks *Rank) {
@@ -55,6 +89,21 @@ func updateRanks(ranks *Rank) {
 			weight := weighting(qty, ranks.Relation.Min, ranks.Relation.Max)
 			ranks.Relation.Scores[x][y] = Score{ranks.Relation.Scores[x][y].Qty, weight}
 		}
+	}
+
+	for _, word := range ranks.Words {
+		if ranks.Max < word.Qty {
+			ranks.Max = word.Qty
+		}
+
+		if ranks.Min > word.Qty || ranks.Min == 0 {
+			ranks.Min = word.Qty
+		}
+	}
+
+	for _, word := range ranks.Words {
+		weight := weighting(word.Qty, ranks.Min, ranks.Max)
+		word.Weight = weight
 	}
 }
 

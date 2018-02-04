@@ -12,7 +12,6 @@ type Rank struct {
 type Sentence struct {
 	ID   int
 	Text string
-	//@todo store words string because rebuild phrases
 }
 
 type Word struct {
@@ -21,6 +20,8 @@ type Word struct {
 	ConnectionLeft  map[int]int
 	ConnectionRight map[int]int
 	Value           string
+	Qty             int
+	Weight          float32
 }
 
 func NewRank() *Rank {
@@ -59,6 +60,8 @@ func (rank *Rank) AddNewWord(word string, prevWordIdx int) (wordID int) {
 		ConnectionLeft:  connectionLeft,
 		ConnectionRight: make(map[int]int),
 		Value:           word,
+		Qty:             1,
+		Weight:          0,
 	}
 
 	rank.Words[wordID] = newWord
@@ -81,8 +84,10 @@ func (rank *Rank) UpdateWord(word string, prevWordIdx int) (wordID int) {
 		}
 	}
 
+	rank.Words[wordID].Qty++
+
 	if prevWordIdx >= 0 {
-		rank.Words[wordID].ConnectionLeft[prevWordIdx] += 1
+		rank.Words[wordID].ConnectionLeft[prevWordIdx]++
 	}
 
 	return
@@ -90,7 +95,7 @@ func (rank *Rank) UpdateWord(word string, prevWordIdx int) (wordID int) {
 
 func (rank *Rank) UpdateRightConnection(wordID int, rightWordID int) {
 	if wordID >= 0 {
-		rank.Words[wordID].ConnectionRight[rightWordID] += 1
+		rank.Words[wordID].ConnectionRight[rightWordID]++
 	}
 }
 
