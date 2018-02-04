@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"parse"
-	"rank"
+	"github.com/DavidBelicza/TextRank/parse"
+	"github.com/DavidBelicza/TextRank/rank"
 )
 
 func TestConvert(t *testing.T) {

@@ -1,9 +1,9 @@
 package textrank
 
 import (
-	"rank"
-	"parse"
-	"convert"
+	"github.com/DavidBelicza/TextRank/rank"
+	"github.com/DavidBelicza/TextRank/parse"
+	"github.com/DavidBelicza/TextRank/convert"
 )
 
 
