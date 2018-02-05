@@ -1,6 +1,10 @@
 language: go
 sudo: false
 
+os:
+  - linux
+  - osx
+  
 matrix:
   include:
     - go: 1.8
