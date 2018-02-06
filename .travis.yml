@@ -1,11 +1,19 @@
 language: go
 sudo: false
 
+os:
+  - linux
+  - osx
+  
 matrix:
   include:
     - go: 1.8
     - go: 1.9
 
+before_install:
+  - go get github.com/mattn/goveralls
+  
 script:
   - go get -t -v ./...
   - go test ./...
+  - $GOPATH/bin/goveralls -service=travis-ci 
