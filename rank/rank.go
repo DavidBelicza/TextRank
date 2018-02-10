@@ -1,17 +1,12 @@
 package rank
 
 type Rank struct {
-	Max       int
-	Min       int
-	Relation  Relation
-	Sentences []Sentence
-	Words     map[int]*Word
-	WordValID map[string]int
-}
-
-type Sentence struct {
-	ID   int
-	Text string
+	Max         int
+	Min         int
+	Relation    Relation
+	SentenceMap map[int]string
+	Words       map[int]*Word
+	WordValID   map[string]int
 }
 
 type Word struct {
@@ -19,7 +14,7 @@ type Word struct {
 	SentenceIDs     []int
 	ConnectionLeft  map[int]int
 	ConnectionRight map[int]int
-	Value           string
+	Token           string
 	Qty             int
 	Weight          float32
 }
@@ -33,7 +28,7 @@ func NewRank() *Rank {
 			0,
 			make(map[int]map[int]Score),
 		},
-		[]Sentence{},
+		make(map[int]string),
 		make(map[int]*Word),
 		make(map[string]int),
 	}
@@ -45,8 +40,7 @@ func (rank *Rank) IsWordExist(word string) bool {
 	return find
 }
 
-func (rank *Rank) AddNewWord(word string, prevWordIdx int) (wordID int) {
-	sentenceID := len(rank.Sentences)
+func (rank *Rank) AddNewWord(word string, prevWordIdx int, sentenceID int) (wordID int) {
 	wordID = len(rank.Words)
 	connectionLeft := make(map[int]int)
 
@@ -59,7 +53,7 @@ func (rank *Rank) AddNewWord(word string, prevWordIdx int) (wordID int) {
 		SentenceIDs:     []int{sentenceID},
 		ConnectionLeft:  connectionLeft,
 		ConnectionRight: make(map[int]int),
-		Value:           word,
+		Token:           word,
 		Qty:             1,
 		Weight:          0,
 	}
@@ -70,18 +64,23 @@ func (rank *Rank) AddNewWord(word string, prevWordIdx int) (wordID int) {
 	return
 }
 
-func (rank *Rank) UpdateWord(word string, prevWordIdx int) (wordID int) {
+func (rank *Rank) UpdateWord(word string, prevWordIdx int, sentenceID int) (wordID int) {
 	wordID = rank.WordValID[word]
 
-	possibleSentenceID := len(rank.Sentences)
-	for _, sentenceID := range rank.Words[wordID].SentenceIDs {
-		if sentenceID == possibleSentenceID {
-			rank.Words[wordID].SentenceIDs = append(
-				rank.Words[wordID].SentenceIDs,
-				possibleSentenceID,
-			)
+	found := false
+
+	for _, oldSentenceID := range rank.Words[wordID].SentenceIDs {
+		if sentenceID == oldSentenceID {
+			found = true
 			break
 		}
+	}
+
+	if !found {
+		rank.Words[wordID].SentenceIDs = append(
+			rank.Words[wordID].SentenceIDs,
+			sentenceID,
+		)
 	}
 
 	rank.Words[wordID].Qty++

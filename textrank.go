@@ -35,10 +35,6 @@ func Calculate(
 	rank.Calculate(provider[id], algorithm)
 }
 
-func GetPhrases(id int) []rank.Phrase {
-	return rank.GetPhrases(provider[id])
-}
-
 func GetBasicAlgorithm() func(int, int, int, int, int, int, int, int, int) float32 {
 	return func(
 		word1ID int,
@@ -48,8 +44,8 @@ func GetBasicAlgorithm() func(int, int, int, int, int, int, int, int, int) float
 		relationMax int,
 		word1Qty int,
 		word2Qty int,
-		word1Max int,
 		word1Min int,
+		word1Max int,
 	) float32 {
 
 		if word1ID != 0 && word2ID != 0 {
@@ -58,4 +54,53 @@ func GetBasicAlgorithm() func(int, int, int, int, int, int, int, int, int) float
 			return (float32(word1Qty) - float32(word1Min)) / (float32(word1Max) - float32(word1Min))
 		}
 	}
+}
+
+func GetAlternateAlgorithm() func(int, int, int, int, int, int, int, int, int) float32 {
+	return func(
+		word1ID int,
+		word2ID int,
+		relationQty int,
+		relationMin int,
+		relationMax int,
+		word1Qty int,
+		word2Qty int,
+		word1Min int,
+		word1Max int,
+	) float32 {
+
+		if word1ID != 0 && word2ID != 0 {
+			min := float32(relationMin + word1Min)
+			max := float32(relationMax + word1Max)
+			qty := float32(relationQty + word1Qty)
+
+			return (qty - min) / (max - min)
+		} else {
+			return (float32(word1Qty) - float32(word1Min)) / (float32(word1Max) - float32(word1Min))
+		}
+	}
+}
+
+func GetPhrases(id int) []rank.Phrase {
+	return rank.GetPhrases(provider[id])
+}
+
+func GetSingleWords(id int) []rank.SingleWord {
+	return rank.GetSingleWords(provider[id])
+}
+
+func GetSentencesByRelationScore(id int, limit int) *[]rank.Sentence {
+	return rank.GetSentences(provider[id], rank.ByRelation, limit)
+}
+
+func GetSentencesByWordQtyScore(id int, limit int) *[]rank.Sentence {
+	return rank.GetSentences(provider[id], rank.ByQty, limit)
+}
+
+func GetSentencesByPhrases(id int, phrases []string) *[]rank.Sentence {
+	return rank.GetSentencesByPhrases(provider[id], phrases)
+}
+
+func GetSentencesFrom(id int, sentenceID int, limit int) *[]rank.Sentence {
+	return rank.GetSentencesFrom(provider[id], sentenceID, limit)
 }
