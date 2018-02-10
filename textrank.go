@@ -6,7 +6,6 @@ import (
 	"github.com/DavidBelicza/TextRank/convert"
 )
 
-
 var provider = make(map[int]*rank.Rank)
 
 func AddText(text string, lang string, id int) {
@@ -29,10 +28,34 @@ func AddText(text string, lang string, id int) {
 	}
 }
 
-func Calculate(id int) {
-	rank.Calculate(provider[id])
+func Calculate(
+	id int,
+	algorithm func(int, int, int, int, int, int, int, int, int) float32,
+) {
+	rank.Calculate(provider[id], algorithm)
 }
 
-func GetPhrases(id int) []rank.Phrase  {
+func GetPhrases(id int) []rank.Phrase {
 	return rank.GetPhrases(provider[id])
+}
+
+func GetBasicAlgorithm() func(int, int, int, int, int, int, int, int, int) float32 {
+	return func(
+		word1ID int,
+		word2ID int,
+		relationQty int,
+		relationMin int,
+		relationMax int,
+		word1Qty int,
+		word2Qty int,
+		word1Max int,
+		word1Min int,
+	) float32 {
+
+		if word1ID != 0 && word2ID != 0 {
+			return (float32(relationQty) - float32(relationMin)) / (float32(relationMax) - float32(relationMin))
+		} else {
+			return (float32(word1Qty) - float32(word1Min)) / (float32(word1Max) - float32(word1Min))
+		}
+	}
 }

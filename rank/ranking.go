@@ -2,8 +2,11 @@ package rank
 
 import "sort"
 
-func Calculate(ranks *Rank) {
-	updateRanks(ranks)
+func Calculate(
+	ranks *Rank,
+	algorithm func(int, int, int, int, int, int, int, int, int) float32,
+) {
+	updateRanks(ranks, algorithm)
 }
 
 type Phrase struct {
@@ -68,7 +71,10 @@ func GetSentencesByPhrases() {
 	// [w1, w2], [w1, w2], [w1], [w1, w2]
 }
 
-func updateRanks(ranks *Rank) {
+func updateRanks(
+	ranks *Rank,
+	algorithm func(int, int, int, int, int, int, int, int, int) float32,
+) {
 	for x, xMap := range ranks.Relation.Scores {
 		for y, _ := range xMap {
 			qty := ranks.Relation.Scores[x][y].Qty
@@ -83,14 +89,6 @@ func updateRanks(ranks *Rank) {
 		}
 	}
 
-	for x, xMap := range ranks.Relation.Scores {
-		for y, _ := range xMap {
-			qty := ranks.Relation.Scores[x][y].Qty
-			weight := weighting(qty, ranks.Relation.Min, ranks.Relation.Max)
-			ranks.Relation.Scores[x][y] = Score{ranks.Relation.Scores[x][y].Qty, weight}
-		}
-	}
-
 	for _, word := range ranks.Words {
 		if ranks.Max < word.Qty {
 			ranks.Max = word.Qty
@@ -101,12 +99,26 @@ func updateRanks(ranks *Rank) {
 		}
 	}
 
+	for x, xMap := range ranks.Relation.Scores {
+		for y, _ := range xMap {
+			qty := ranks.Relation.Scores[x][y].Qty
+			weight := algorithm(
+				x,
+				y,
+				qty,
+				ranks.Relation.Min,
+				ranks.Relation.Max,
+				ranks.Words[x].Qty,
+				ranks.Words[y].Qty,
+				ranks.Min,
+				ranks.Max,
+			)
+			ranks.Relation.Scores[x][y] = Score{ranks.Relation.Scores[x][y].Qty, weight}
+		}
+	}
+
 	for _, word := range ranks.Words {
-		weight := weighting(word.Qty, ranks.Min, ranks.Max)
+		weight := algorithm(word.ID, 0, 0, 0, 0, word.Qty, 0, ranks.Min, ranks.Max)
 		word.Weight = weight
 	}
-}
-
-func weighting(qty int, min int, max int) float32 {
-	return (float32(qty) - float32(min)) / (float32(max) - float32(min))
 }
