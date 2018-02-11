@@ -4,7 +4,7 @@ import (
 	"strings"
 )
 
-var wordSeparators = [10]string{" ", ",", ")", "(", "[", "]", "{", "}", "\"", ";"}
+var wordSeparators = [11]string{" ", ",", ")", "(", "[", "]", "{", "}", "\"", ";", "\n"}
 var sentenceSeparators = [3]string{"!", ".", "?"}
 
 func TokenizeText(rawText string) Text {

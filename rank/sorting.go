@@ -123,19 +123,17 @@ func GetSentencesByPhrases(ranks *Rank, words []string) *[]Sentence {
 
 	for _, i := range words {
 		for _, j := range words {
-			if j != i {
-				x := ranks.WordValID[i]
-				y := ranks.WordValID[j]
+			x := ranks.WordValID[i]
+			y := ranks.WordValID[j]
 
-				if _, ok := ranks.Relation.Node[x][y]; ok {
-					curSentenceIDs := ranks.Relation.Node[x][y].SentenceIDs
+			if _, ok := ranks.Relation.Node[x][y]; ok {
+				curSentenceIDs := ranks.Relation.Node[x][y].SentenceIDs
 
-					for _, id := range curSentenceIDs {
-						if _, ok := sentenceIDs[id]; ok {
-							sentenceIDs[id]++
-						} else {
-							sentenceIDs[id] = 1
-						}
+				for _, id := range curSentenceIDs {
+					if _, ok := sentenceIDs[id]; ok {
+						sentenceIDs[id]++
+					} else {
+						sentenceIDs[id] = 1
 					}
 				}
 			}
@@ -143,7 +141,7 @@ func GetSentencesByPhrases(ranks *Rank, words []string) *[]Sentence {
 	}
 
 	for sentenceID, v := range sentenceIDs {
-		if v == reqMatch {
+		if v >= reqMatch {
 			sentences = append(sentences, Sentence{sentenceID, ranks.SentenceMap[sentenceID]})
 		}
 	}
