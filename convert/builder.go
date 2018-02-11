@@ -1,8 +1,8 @@
 package convert
 
 import (
-	"github.com/DavidBelicza/TextRank/rank"
 	"github.com/DavidBelicza/TextRank/parse"
+	"github.com/DavidBelicza/TextRank/rank"
 )
 
 func TextToRank(sentence parse.ParsedSentence, lang Language, ranks *rank.Rank) {

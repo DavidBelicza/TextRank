@@ -2,14 +2,14 @@ package rank
 
 func Calculate(
 	ranks *Rank,
-	algorithm func(int, int, int, int, int, int, int, int, int) float32,
+	algorithm Algorithm,
 ) {
 	updateRanks(ranks, algorithm)
 }
 
 func updateRanks(
 	ranks *Rank,
-	algorithm func(int, int, int, int, int, int, int, int, int) float32,
+	algorithm Algorithm,
 ) {
 	for x, xMap := range ranks.Relation.Node {
 		for y, _ := range xMap {
@@ -36,7 +36,7 @@ func updateRanks(
 	}
 
 	for _, word := range ranks.Words {
-		weight := algorithm(word.ID, 0, 0, 0, 0, word.Qty, 0, ranks.Min, ranks.Max)
+		weight := algorithm.WeightingHits(word.ID, word.Qty, ranks.Min, ranks.Max)
 		word.Weight = weight
 	}
 
@@ -44,7 +44,7 @@ func updateRanks(
 		for y, _ := range xMap {
 			qty := ranks.Relation.Node[x][y].Qty
 			sentenceIDs := ranks.Relation.Node[x][y].SentenceIDs
-			weight := algorithm(
+			weight := algorithm.WeightingRelation(
 				x,
 				y,
 				qty,
