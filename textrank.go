@@ -8,7 +8,7 @@ import (
 
 var provider = make(map[int]*rank.Rank)
 
-func AddText(text string, lang string, id int) {
+func Append(text string, lang convert.Language, rule parse.Rule, id int) {
 	var ranks *rank.Rank
 
 	if savedTextRank, ok := provider[id]; ok {
@@ -18,17 +18,14 @@ func AddText(text string, lang string, id int) {
 		provider[id] = ranks
 	}
 
-	language := convert.NewLanguage()
-	language.SetDefaultLanguage(lang)
-
-	parsedText := parse.TokenizeText(text)
+	parsedText := parse.TokenizeText(text, rule)
 
 	for _, sentence := range parsedText.GetSentences() {
-		convert.TextToRank(sentence, language, provider[id])
+		convert.TextToRank(sentence, lang, provider[id])
 	}
 }
 
-func Calculate(
+func Ranking(
 	id int,
 	algorithm func(int, int, int, int, int, int, int, int, int) float32,
 ) {
@@ -79,6 +76,14 @@ func AlgorithmAlternate() func(int, int, int, int, int, int, int, int, int) floa
 			return (float32(word1Qty) - float32(word1Min)) / (float32(word1Max) - float32(word1Min))
 		}
 	}
+}
+
+func GetDefaultLanguage() *convert.LanguageDefault {
+	return convert.NewLanguage()
+}
+
+func GetDefaultRule() *parse.RuleDefault {
+	return parse.NewRule()
 }
 
 func GetRank(id int) *rank.Rank {

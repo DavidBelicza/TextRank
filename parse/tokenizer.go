@@ -4,44 +4,41 @@ import (
 	"strings"
 )
 
-var wordSeparators = [11]string{" ", ",", ")", "(", "[", "]", "{", "}", "\"", ";", "\n"}
-var sentenceSeparators = [3]string{"!", ".", "?"}
-
-func TokenizeText(rawText string) Text {
-	return findSentences(rawText)
+func TokenizeText(rawText string, rule Rule) Text {
+	return findSentences(rawText, rule)
 }
 
-func findSentences(rawText string) Text {
+func findSentences(rawText string, rule Rule) Text {
 	text := Text{}
 
 	var sentence string
 
 	for _, chr := range rawText {
-		if !isSentenceSeparator(chr) {
+		if !rule.IsSentenceSeparator(chr) {
 			sentence = sentence + string(chr)
 		} else if len(sentence) > 0 {
 			sentence = sentence + string(chr)
 
-			text.Append(sentence, findWords(sentence))
+			text.Append(sentence, findWords(sentence, rule))
 
 			sentence = ""
 		}
 	}
 
 	if len(sentence) > 0 {
-		text.Append(sentence, findWords(sentence))
+		text.Append(sentence, findWords(sentence, rule))
 	}
 
 	return text
 }
 
-func findWords(rawSentence string) (words []string) {
+func findWords(rawSentence string, rule Rule) (words []string) {
 	words = []string{}
 
 	var word string
 
 	for _, chr := range rawSentence {
-		if !isWordSeparator(chr) {
+		if !rule.IsWordSeparator(chr) {
 			word = word + string(chr)
 		} else if len(word) > 0 {
 			words = append(words, strings.ToLower(word))
@@ -54,28 +51,4 @@ func findWords(rawSentence string) (words []string) {
 	}
 
 	return
-}
-
-func isWordSeparator(rune rune) bool {
-	chr := string(rune)
-
-	for _, val := range wordSeparators {
-		if chr == val {
-			return true
-		}
-	}
-
-	return isSentenceSeparator(rune)
-}
-
-func isSentenceSeparator(rune rune) bool {
-	chr := string(rune)
-
-	for _, val := range sentenceSeparators {
-		if chr == val {
-			return true
-		}
-	}
-
-	return false
 }

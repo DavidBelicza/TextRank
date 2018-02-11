@@ -5,12 +5,12 @@ import (
 	"github.com/DavidBelicza/TextRank/parse"
 )
 
-func TextToRank(sentence parse.ParsedSentence, lang *Language, ranks *rank.Rank) {
+func TextToRank(sentence parse.ParsedSentence, lang Language, ranks *rank.Rank) {
 	sentenceId := addSentence(ranks, sentence)
 	addWord(ranks, sentence.GetWords(), lang, sentenceId)
 }
 
-func addWord(ranks *rank.Rank, words []string, lang *Language, sentenceID int) {
+func addWord(ranks *rank.Rank, words []string, lang Language, sentenceID int) {
 	prevWordID := -1
 	curWordID := -1
 

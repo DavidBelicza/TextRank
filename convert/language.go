@@ -1,12 +1,18 @@
 package convert
 
-type Language struct {
+type Language interface {
+	IsStopWord(word string) bool
+	SetActiveLanguage(code string)
+	SetWords(code string, words []string)
+}
+
+type LanguageDefault struct {
 	defaultLang string
 	languages   map[string][]string
 }
 
-func NewLanguage() *Language {
-	lang := &Language{
+func NewLanguage() *LanguageDefault {
+	lang := &LanguageDefault{
 		"en",
 		make(map[string][]string),
 	}
@@ -18,7 +24,7 @@ func NewLanguage() *Language {
 	return lang
 }
 
-func (lang *Language) IsStopWord(word string) bool {
+func (lang *LanguageDefault) IsStopWord(word string) bool {
 	if stopWords, ok := lang.languages[lang.defaultLang]; ok {
 		for _, val := range stopWords {
 			if val == word {
@@ -30,10 +36,10 @@ func (lang *Language) IsStopWord(word string) bool {
 	return false
 }
 
-func (lang *Language) SetDefaultLanguage(code string) {
+func (lang *LanguageDefault) SetActiveLanguage(code string) {
 	lang.defaultLang = code
 }
 
-func (lang *Language) SetWords(code string, words []string) {
+func (lang *LanguageDefault) SetWords(code string, words []string) {
 	lang.languages[code] = words
 }
