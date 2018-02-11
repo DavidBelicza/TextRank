@@ -70,7 +70,7 @@ type Sentence struct {
 const ByQty = 0
 const ByRelation = 1
 
-func GetSentences(ranks *Rank, kind int, limit int) *[]Sentence {
+func GetSentences(ranks *Rank, kind int, limit int) []Sentence {
 	var sentences []Sentence
 
 	cache := make(map[int]bool)
@@ -97,7 +97,7 @@ func GetSentences(ranks *Rank, kind int, limit int) *[]Sentence {
 			sentenceIDs := ranks.Words[singleWord.ID].SentenceIDs
 
 			if collect(sentenceIDs) {
-				return &sentences
+				return sentences
 			}
 		}
 	} else if kind == ByRelation {
@@ -107,15 +107,15 @@ func GetSentences(ranks *Rank, kind int, limit int) *[]Sentence {
 			sentenceIDs := ranks.Relation.Node[phrase.LeftID][phrase.RightID].SentenceIDs
 
 			if collect(sentenceIDs) {
-				return &sentences
+				return sentences
 			}
 		}
 	}
 
-	return &sentences
+	return sentences
 }
 
-func GetSentencesByPhrases(ranks *Rank, words []string) *[]Sentence {
+func GetSentencesByPhrases(ranks *Rank, words []string) []Sentence {
 	var sentences []Sentence
 
 	reqMatch := len(words) - 1
@@ -150,10 +150,10 @@ func GetSentencesByPhrases(ranks *Rank, words []string) *[]Sentence {
 		return sentences[i].ID < sentences[j].ID
 	})
 
-	return &sentences
+	return sentences
 }
 
-func GetSentencesFrom(ranks *Rank, id int, limit int) *[]Sentence {
+func GetSentencesFrom(ranks *Rank, id int, limit int) []Sentence {
 	var sentences []Sentence
 
 	limit = id + limit - 1
@@ -162,5 +162,5 @@ func GetSentencesFrom(ranks *Rank, id int, limit int) *[]Sentence {
 		sentences = append(sentences, Sentence{i, ranks.SentenceMap[i]})
 	}
 
-	return &sentences
+	return sentences
 }

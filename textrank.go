@@ -35,7 +35,7 @@ func Calculate(
 	rank.Calculate(provider[id], algorithm)
 }
 
-func GetBasicAlgorithm() func(int, int, int, int, int, int, int, int, int) float32 {
+func AlgorithmBasic() func(int, int, int, int, int, int, int, int, int) float32 {
 	return func(
 		word1ID int,
 		word2ID int,
@@ -56,7 +56,7 @@ func GetBasicAlgorithm() func(int, int, int, int, int, int, int, int, int) float
 	}
 }
 
-func GetAlternateAlgorithm() func(int, int, int, int, int, int, int, int, int) float32 {
+func AlgorithmAlternate() func(int, int, int, int, int, int, int, int, int) float32 {
 	return func(
 		word1ID int,
 		word2ID int,
@@ -81,6 +81,10 @@ func GetAlternateAlgorithm() func(int, int, int, int, int, int, int, int, int) f
 	}
 }
 
+func GetRank(id int) *rank.Rank {
+	return provider[id]
+}
+
 func GetPhrases(id int) []rank.Phrase {
 	return rank.GetPhrases(provider[id])
 }
@@ -89,18 +93,18 @@ func GetSingleWords(id int) []rank.SingleWord {
 	return rank.GetSingleWords(provider[id])
 }
 
-func GetSentencesByRelationScore(id int, limit int) *[]rank.Sentence {
+func GetSentencesByRelationScore(id int, limit int) []rank.Sentence {
 	return rank.GetSentences(provider[id], rank.ByRelation, limit)
 }
 
-func GetSentencesByWordQtyScore(id int, limit int) *[]rank.Sentence {
+func GetSentencesByWordQtyScore(id int, limit int) []rank.Sentence {
 	return rank.GetSentences(provider[id], rank.ByQty, limit)
 }
 
-func GetSentencesByPhrases(id int, phrases []string) *[]rank.Sentence {
+func GetSentencesByPhrases(id int, phrases []string) []rank.Sentence {
 	return rank.GetSentencesByPhrases(provider[id], phrases)
 }
 
-func GetSentencesFrom(id int, sentenceID int, limit int) *[]rank.Sentence {
+func GetSentencesFrom(id int, sentenceID int, limit int) []rank.Sentence {
 	return rank.GetSentencesFrom(provider[id], sentenceID, limit)
 }
