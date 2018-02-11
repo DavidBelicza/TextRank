@@ -9,15 +9,15 @@ type Algorithm interface {
 		relationMax int,
 		word1Qty int,
 		word2Qty int,
-		word1Min int,
-		word1Max int,
+		wordQtyMin int,
+		wordQtyMax int,
 	) float32
 
 	WeightingHits(
-		word1ID int,
-		word1Qty int,
-		word1Min int,
-		word1Max int,
+		wordID int,
+		wordQty int,
+		wordMin int,
+		wordMax int,
 	) float32
 }
 
@@ -35,19 +35,19 @@ func (a *AlgorithmDefault) WeightingRelation(
 	relationMax int,
 	word1Qty int,
 	word2Qty int,
-	word1Min int,
-	word1Max int,
+	wordQtyMin int,
+	wordQtyMax int,
 ) float32 {
 	return (float32(relationQty) - float32(relationMin)) / (float32(relationMax) - float32(relationMin))
 }
 
 func (a *AlgorithmDefault) WeightingHits(
-	word1ID int,
-	word1Qty int,
-	word1Min int,
-	word1Max int,
+	wordID int,
+	wordQty int,
+	wordMin int,
+	wordMax int,
 ) float32 {
-	return (float32(word1Qty) - float32(word1Min)) / (float32(word1Max) - float32(word1Min))
+	return (float32(wordQty) - float32(wordMin)) / (float32(wordMax) - float32(wordMin))
 }
 
 type AlgorithmMixed struct {}
@@ -64,21 +64,21 @@ func (a *AlgorithmMixed) WeightingRelation(
 	relationMax int,
 	word1Qty int,
 	word2Qty int,
-	word1Min int,
-	word1Max int,
+	wordQtyMin int,
+	wordQtyMax int,
 ) float32 {
-	min := float32(relationMin + word1Min)
-	max := float32(relationMax + word1Max)
+	min := float32(relationMin + wordQtyMin)
+	max := float32(relationMax + wordQtyMax)
 	qty := float32(relationQty + word1Qty)
 
 	return (qty - min) / (max - min)
 }
 
 func (a *AlgorithmMixed) WeightingHits(
-	word1ID int,
-	word1Qty int,
-	word1Min int,
-	word1Max int,
+	wordID int,
+	wordQty int,
+	wordMin int,
+	wordMax int,
 ) float32 {
-	return (float32(word1Qty) - float32(word1Min)) / (float32(word1Max) - float32(word1Min))
+	return (float32(wordQty) - float32(wordMin)) / (float32(wordMax) - float32(wordMin))
 }

@@ -1,16 +1,10 @@
 package rank
 
-func Calculate(
-	ranks *Rank,
-	algorithm Algorithm,
-) {
+func Calculate(ranks *Rank,	algorithm Algorithm) {
 	updateRanks(ranks, algorithm)
 }
 
-func updateRanks(
-	ranks *Rank,
-	algorithm Algorithm,
-) {
+func updateRanks(ranks *Rank, algorithm Algorithm) {
 	for x, xMap := range ranks.Relation.Node {
 		for y, _ := range xMap {
 			qty := ranks.Relation.Node[x][y].Qty

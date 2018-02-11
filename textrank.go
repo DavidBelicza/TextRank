@@ -25,10 +25,7 @@ func Append(text string, lang convert.Language, rule parse.Rule, id int) {
 	}
 }
 
-func Ranking(
-	id int,
-	algorithm rank.Algorithm,
-) {
+func Ranking(id int, algorithm rank.Algorithm) {
 	rank.Calculate(provider[id], algorithm)
 }
 
@@ -53,25 +50,25 @@ func GetRank(id int) *rank.Rank {
 }
 
 func FindPhrases(id int) []rank.Phrase {
-	return rank.GetPhrases(provider[id])
+	return rank.FindPhrases(provider[id])
 }
 
 func FindSingleWords(id int) []rank.SingleWord {
-	return rank.GetSingleWords(provider[id])
+	return rank.FindSingleWords(provider[id])
 }
 
 func FindSentencesByRelationScore(id int, limit int) []rank.Sentence {
-	return rank.GetSentences(provider[id], rank.ByRelation, limit)
+	return rank.FindSentences(provider[id], rank.ByRelation, limit)
 }
 
 func FindSentencesByWordQtyScore(id int, limit int) []rank.Sentence {
-	return rank.GetSentences(provider[id], rank.ByQty, limit)
+	return rank.FindSentences(provider[id], rank.ByQty, limit)
 }
 
 func FindSentencesByPhrases(id int, phrases []string) []rank.Sentence {
-	return rank.GetSentencesByPhrases(provider[id], phrases)
+	return rank.FindSentencesByPhrases(provider[id], phrases)
 }
 
 func FindSentencesFrom(id int, sentenceID int, limit int) []rank.Sentence {
-	return rank.GetSentencesFrom(provider[id], sentenceID, limit)
+	return rank.FindSentencesFrom(provider[id], sentenceID, limit)
 }

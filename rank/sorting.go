@@ -13,7 +13,7 @@ type Phrase struct {
 	Qty     int
 }
 
-func GetPhrases(ranks *Rank) []Phrase {
+func FindPhrases(ranks *Rank) []Phrase {
 	var phrases []Phrase
 
 	for x, xMap := range ranks.Relation.Node {
@@ -43,7 +43,7 @@ type SingleWord struct {
 	Qty    int
 }
 
-func GetSingleWords(ranks *Rank) []SingleWord {
+func FindSingleWords(ranks *Rank) []SingleWord {
 	var singleWords []SingleWord
 
 	for _, word := range ranks.Words {
@@ -70,7 +70,7 @@ type Sentence struct {
 const ByQty = 0
 const ByRelation = 1
 
-func GetSentences(ranks *Rank, kind int, limit int) []Sentence {
+func FindSentences(ranks *Rank, kind int, limit int) []Sentence {
 	var sentences []Sentence
 
 	cache := make(map[int]bool)
@@ -91,7 +91,7 @@ func GetSentences(ranks *Rank, kind int, limit int) []Sentence {
 	}
 
 	if kind == ByQty {
-		singleWords := GetSingleWords(ranks)
+		singleWords := FindSingleWords(ranks)
 
 		for _, singleWord := range singleWords {
 			sentenceIDs := ranks.Words[singleWord.ID].SentenceIDs
@@ -101,7 +101,7 @@ func GetSentences(ranks *Rank, kind int, limit int) []Sentence {
 			}
 		}
 	} else if kind == ByRelation {
-		phrases := GetPhrases(ranks)
+		phrases := FindPhrases(ranks)
 
 		for _, phrase := range phrases {
 			sentenceIDs := ranks.Relation.Node[phrase.LeftID][phrase.RightID].SentenceIDs
@@ -115,7 +115,7 @@ func GetSentences(ranks *Rank, kind int, limit int) []Sentence {
 	return sentences
 }
 
-func GetSentencesByPhrases(ranks *Rank, words []string) []Sentence {
+func FindSentencesByPhrases(ranks *Rank, words []string) []Sentence {
 	var sentences []Sentence
 
 	reqMatch := len(words) - 1
@@ -153,7 +153,7 @@ func GetSentencesByPhrases(ranks *Rank, words []string) []Sentence {
 	return sentences
 }
 
-func GetSentencesFrom(ranks *Rank, id int, limit int) []Sentence {
+func FindSentencesFrom(ranks *Rank, id int, limit int) []Sentence {
 	var sentences []Sentence
 
 	limit = id + limit - 1
