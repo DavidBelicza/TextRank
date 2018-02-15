@@ -85,11 +85,11 @@ func Append(text string, lang convert.Language, rule parse.Rule, id int) {
 // Ranking function counts the words and connections between the words and
 // weights the numbers then normalize them in type float32 between 0.00 and
 // 1.00. This is the 5th step to use TextRank.
-
+//
 // id int is the identifier of the TextRank. Because it's possible ranking
 // multiple texts in multiple languages with multiple rules in the same time an
 // ID is must have.
-
+//
 // algorithm Algorithm is the object of the weighting and scoring methods.
 func Ranking(id int, algorithm rank.Algorithm) {
 	rank.Calculate(provider[id], algorithm)
