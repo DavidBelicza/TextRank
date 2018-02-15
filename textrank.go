@@ -52,15 +52,19 @@ func CreateMixedAlgorithm() *rank.AlgorithmMixed {
 // tokenize the raw text and prepares it to weighting and scoring. It's
 // possible to append a new raw text to an existing one even if the previously
 // text is already ranked. This is 4th. step to use TextRank.
-// - text string must be a plain text from TXT or PDF or any document, it can
-//   contain new lines, break lines or any unnecessary text parts, but it
-//   should not contain html tags or codes.
-// - lang Language object can be loaded from CreateDefaultLanguage function.
-// - rule Rule object can be loaded from CreateDefaultRule function.
-// - id int is the identifier of the TextRank. Because it's possible ranking
-//   multiple texts in multiple languages with multiple rules in the same time
-//   an ID is must have. If ranking is not exist by ID this function will
-//   create a new ranking with the given ID.
+//
+// text string must be a plain text from TXT or PDF or any document, it can
+// contain new lines, break lines or any unnecessary text parts, but it should
+// not contain html tags or codes.
+//
+// lang Language object can be loaded from CreateDefaultLanguage function.
+//
+// rule Rule object can be loaded from CreateDefaultRule function.
+//
+// id int is the identifier of the TextRank. Because it's possible ranking
+// multiple texts in multiple languages with multiple rules in the same time an
+// ID is must have. If ranking is not exist by ID this function will create a
+// new ranking with the given ID.
 func Append(text string, lang convert.Language, rule parse.Rule, id int) {
 	var ranks *rank.Rank
 
@@ -81,10 +85,12 @@ func Append(text string, lang convert.Language, rule parse.Rule, id int) {
 // Ranking function counts the words and connections between the words and
 // weights the numbers then normalize them in type float32 between 0.00 and
 // 1.00. This is the 5th step to use TextRank.
-// - id int is the identifier of the TextRank. Because it's possible ranking
-//   multiple texts in multiple languages with multiple rules in the same time
-//   an ID is must have.
-// - algorithm Algorithm is the object of the weighting and scoring methods.
+
+// id int is the identifier of the TextRank. Because it's possible ranking
+// multiple texts in multiple languages with multiple rules in the same time an
+// ID is must have.
+
+// algorithm Algorithm is the object of the weighting and scoring methods.
 func Ranking(id int, algorithm rank.Algorithm) {
 	rank.Calculate(provider[id], algorithm)
 }
@@ -123,16 +129,18 @@ func FindSentencesByWordQtyWeight(id int, limit int) []rank.Sentence {
 // structures by id and slice of phrases what contains the ID of the sentence
 // and the sentence itself. The slice is sorted by weight of word quantities
 // from 1 to 0.
-// - id int is the ID of the TextRank.
-// - phrases []string is a slice of phrases. One phrase is from two words, so
-//   when the slice contains 3 words the inner method will search for two
-//   phrases.
+//
+// id int is the ID of the TextRank.
+//
+// phrases []string is a slice of phrases. One phrase is from two words, so
+// when the slice contains 3 words the inner method will search for two
+// phrases.
 //
 //    rawText := "Long raw text, lorem ipsum..."
 //    rule := CreateDefaultRule()
 //    language := CreateDefaultLanguage()
 //    algorithm := CreateDefaultAlgorithm()
-
+//
 //    Append(rawText, language, rule, 1)
 //    Ranking(1, algorithm)
 //
