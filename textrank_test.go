@@ -18,8 +18,12 @@ func TestRegularUsage(t *testing.T) {
 
 	FindPhrases(1)
 	FindSingleWords(1)
-	FindSentencesByRelationScore(1,6)
-	FindSentencesByPhrases(1, []string{"gnome", "shell", "favourite"})
+	FindSentencesByRelationWeight(1,6)
+	FindSentencesByPhraseChain(1, []string{
+		"gnome",
+		"shell",
+		"favourite",
+	})
 	FindSentencesFrom(1, 2, 2)
 
 	assert.Equal(t, 1, 1)
