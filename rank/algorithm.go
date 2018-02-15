@@ -1,5 +1,7 @@
 package rank
 
+import "math"
+
 type Algorithm interface {
 	WeightingRelation(
 		word1ID int,
@@ -21,7 +23,7 @@ type Algorithm interface {
 	) float32
 }
 
-type AlgorithmDefault struct {}
+type AlgorithmDefault struct{}
 
 func NewAlgorithmDefault() *AlgorithmDefault {
 	return &AlgorithmDefault{}
@@ -38,7 +40,13 @@ func (a *AlgorithmDefault) WeightingRelation(
 	wordQtyMin int,
 	wordQtyMax int,
 ) float32 {
-	return (float32(relationQty) - float32(relationMin)) / (float32(relationMax) - float32(relationMin))
+	weight := (float32(relationQty) - float32(relationMin)) / (float32(relationMax) - float32(relationMin))
+
+	if math.IsNaN(float64(weight)) {
+		return 0
+	}
+
+	return weight
 }
 
 func (a *AlgorithmDefault) WeightingHits(
@@ -47,10 +55,16 @@ func (a *AlgorithmDefault) WeightingHits(
 	wordMin int,
 	wordMax int,
 ) float32 {
-	return (float32(wordQty) - float32(wordMin)) / (float32(wordMax) - float32(wordMin))
+	weight := (float32(wordQty) - float32(wordMin)) / (float32(wordMax) - float32(wordMin))
+
+	if math.IsNaN(float64(weight)) {
+		return 0
+	}
+
+	return weight
 }
 
-type AlgorithmMixed struct {}
+type AlgorithmMixed struct{}
 
 func NewAlgorithmMixed() *AlgorithmMixed {
 	return &AlgorithmMixed{}
@@ -71,7 +85,13 @@ func (a *AlgorithmMixed) WeightingRelation(
 	max := float32(relationMax + wordQtyMax)
 	qty := float32(relationQty + word1Qty)
 
-	return (qty - min) / (max - min)
+	weight := (qty - min) / (max - min)
+
+	if math.IsNaN(float64(weight)) {
+		return 0
+	}
+
+	return weight
 }
 
 func (a *AlgorithmMixed) WeightingHits(
@@ -80,5 +100,11 @@ func (a *AlgorithmMixed) WeightingHits(
 	wordMin int,
 	wordMax int,
 ) float32 {
-	return (float32(wordQty) - float32(wordMin)) / (float32(wordMax) - float32(wordMin))
+	weight := (float32(wordQty) - float32(wordMin)) / (float32(wordMax) - float32(wordMin))
+
+	if math.IsNaN(float64(weight)) {
+		return 0
+	}
+
+	return weight
 }

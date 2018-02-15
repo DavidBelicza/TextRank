@@ -6,13 +6,13 @@ type Rule interface {
 }
 
 type RuleDefault struct {
-	wordSeparators [11]string
+	wordSeparators     [18]string
 	sentenceSeparators [3]string
 }
 
 func NewRule() *RuleDefault {
 	return &RuleDefault{
-		[11]string{" ", ",", ")", "(", "[", "]", "{", "}", "\"", ";", "\n"},
+		[18]string{" ", ",", ")", "(", "[", "]", "{", "}", "\"", ";", "\n", ">", "<", "%", "@", "&", "=", "#"},
 		[3]string{"!", ".", "?"},
 	}
 }
