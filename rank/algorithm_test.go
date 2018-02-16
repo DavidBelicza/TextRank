@@ -16,6 +16,10 @@ func TestWeightingRelation(t *testing.T) {
 	weightMix := mix.WeightingRelation(1, 2, 5, 1, 10, 2, 2, 1, 15)
 
 	assert.Equal(t, float32(0.2173913), weightMix)
+
+	weightMix = mix.WeightingHits(1, 1, 1, 1)
+
+	assert.Equal(t, float32(0), weightMix)
 }
 
 func TestWeightingHits(t *testing.T) {
@@ -28,4 +32,8 @@ func TestWeightingHits(t *testing.T) {
 	weightMix := mix.WeightingHits(1, 5, 1, 10)
 
 	assert.Equal(t, float32(0.44444445), weightMix)
+
+	weightMix = mix.WeightingHits(1, 1, 1, 1)
+
+	assert.Equal(t, float32(0), weightMix)
 }
