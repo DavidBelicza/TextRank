@@ -7,8 +7,8 @@ import (
 type Phrase struct {
 	LeftID  int
 	RightID int
-	Right   string
 	Left    string
+	Right   string
 	Weight  float32
 	Qty     int
 }
