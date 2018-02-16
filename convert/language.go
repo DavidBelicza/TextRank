@@ -25,6 +25,10 @@ func NewLanguage() *LanguageDefault {
 }
 
 func (lang *LanguageDefault) IsStopWord(word string) bool {
+	if len(word) <= 2 {
+		return false
+	}
+
 	if stopWords, ok := lang.languages[lang.defaultLang]; ok {
 		for _, val := range stopWords {
 			if val == word {
