@@ -119,6 +119,16 @@ func assertTheGnomeTestTextDefault(t *testing.T, graphId int) {
 	assert.Equal(t, 12, singleWords[0].Qty)
 	assert.Equal(t, singleWords[0].ID, rankForCheck.WordValID[singleWords[0].Word])
 
+	sentencesByQtyWeight := FindSentencesByWordQtyWeight(graphId, 6)
+
+	assert.Equal(t, 6, len(sentencesByQtyWeight))
+	assert.Equal(t, 0, sentencesByQtyWeight[0].ID)
+	assert.Equal(t, 2, sentencesByQtyWeight[1].ID)
+	assert.Equal(t, 3, sentencesByQtyWeight[2].ID)
+	assert.Equal(t, 4, sentencesByQtyWeight[3].ID)
+	assert.Equal(t, 7, sentencesByQtyWeight[4].ID)
+	assert.Equal(t, sentencesByQtyWeight[4].Value, rankForCheck.SentenceMap[sentencesByQtyWeight[4].ID])
+
 	sentencesByRelWeight := FindSentencesByRelationWeight(graphId,6)
 
 	assert.Equal(t, 6, len(sentencesByRelWeight))
