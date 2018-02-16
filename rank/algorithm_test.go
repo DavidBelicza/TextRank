@@ -17,7 +17,7 @@ func TestWeightingRelation(t *testing.T) {
 
 	assert.Equal(t, float32(0.2173913), weightMix)
 
-	weightMix = mix.WeightingHits(1, 1, 1, 1)
+	weightMix = mix.WeightingRelation(1, 2, 1, 1, 1, 1, 1, 1, 1)
 
 	assert.Equal(t, float32(0), weightMix)
 }
