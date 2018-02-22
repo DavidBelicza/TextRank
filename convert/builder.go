@@ -5,6 +5,8 @@ import (
 	"github.com/DavidBelicza/TextRank/rank"
 )
 
+// TextToRank function converts a ParsedSentence object to Rank object, it is
+// the preparing process to later text ranking.
 func TextToRank(sentence parse.ParsedSentence, lang Language, ranks *rank.Rank) {
 	sentenceId := addSentence(ranks, sentence)
 	addWord(ranks, sentence.GetWords(), lang, sentenceId)

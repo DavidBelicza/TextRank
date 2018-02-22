@@ -1,17 +1,33 @@
 package rank
 
+// Relation struct contains the phrase data.
+//
+// Max is the occurrence of the most used phrase.
+//
+// Min is the occurrence of the less used phrase. It is always greater then 0.ű
+//
+// Node is contains the Scores. Firs ID is the word 1, second ID is the word 2,
+// and the value is the Score what contains the data about their relation.
 type Relation struct {
 	Max  int
 	Min  int
 	Node map[int]map[int]Score
 }
 
+// Score struct contains data about a relation of two words.
+//
+// Qty is the occurrence of the phrase.
+//
+// Weight is the weight of the phrase between 0.00 and 1.00.
+//
+// SentenceIDs contains all IDs of sentences what contain the phrase.
 type Score struct {
 	Qty         int
 	Weight      float32
 	SentenceIDs []int
 }
 
+// AddRelation method adds a new relation to Relation object.
 func (relation *Relation) AddRelation(wordID int, relatedWordID int, sentenceID int) {
 	if relatedWordID == -1 {
 		return

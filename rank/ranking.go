@@ -1,6 +1,7 @@
 package rank
 
-func Calculate(ranks *Rank,	algorithm Algorithm) {
+// Calculate function ranking words by the given algorithm implementation.
+func Calculate(ranks *Rank, algorithm Algorithm) {
 	updateRanks(ranks, algorithm)
 }
 

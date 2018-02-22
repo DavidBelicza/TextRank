@@ -88,7 +88,7 @@ func assertTheGnomeTestTextDefault(t *testing.T, graphId int) {
 	max := len(mostPopulars) - 1
 
 	for i := 0; i < max; i++ {
-		found := func (ph rank.Phrase) bool {
+		found := func(ph rank.Phrase) bool {
 			for _, popular := range mostPopulars {
 				expression := ph.Left + " " + ph.Right
 
@@ -129,7 +129,7 @@ func assertTheGnomeTestTextDefault(t *testing.T, graphId int) {
 	assert.Equal(t, 7, sentencesByQtyWeight[4].ID)
 	assert.Equal(t, sentencesByQtyWeight[4].Value, rankForCheck.SentenceMap[sentencesByQtyWeight[4].ID])
 
-	sentencesByRelWeight := FindSentencesByRelationWeight(graphId,6)
+	sentencesByRelWeight := FindSentencesByRelationWeight(graphId, 6)
 
 	assert.Equal(t, 6, len(sentencesByRelWeight))
 	assert.Equal(t, 2, sentencesByRelWeight[0].ID)
@@ -153,8 +153,8 @@ func assertTheGnomeTestTextDefault(t *testing.T, graphId int) {
 	foundSentences := FindSentencesFrom(graphId, sentenceIdStart, 3)
 
 	assert.Equal(t, sentenceIdStart, foundSentences[0].ID)
-	assert.Equal(t, sentenceIdStart + 1, foundSentences[1].ID)
-	assert.Equal(t, sentenceIdStart + 2, foundSentences[2].ID)
+	assert.Equal(t, sentenceIdStart+1, foundSentences[1].ID)
+	assert.Equal(t, sentenceIdStart+2, foundSentences[2].ID)
 	assert.Equal(t, 3, len(foundSentences))
 	assert.Equal(t, foundSentences[0].Value, rankForCheck.SentenceMap[foundSentences[0].ID])
 }
@@ -182,7 +182,7 @@ func assertTheGnomeTestTextMix(t *testing.T, graphId int) {
 	max := len(mostPopulars) - 1
 
 	for i := 0; i < max; i++ {
-		found := func (ph rank.Phrase) bool {
+		found := func(ph rank.Phrase) bool {
 			for _, popular := range mostPopulars {
 				expression := ph.Left + " " + ph.Right
 
