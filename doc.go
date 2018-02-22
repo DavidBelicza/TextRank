@@ -1,4 +1,3 @@
-package textrank
 /*
 TextRank implementation in Golang with extendable features (automatic
 summarization, phrase extraction). It supports multithreading by goroutines.
@@ -26,3 +25,4 @@ large number of sectors in industry today." - Wikipedia
 		"kirk",
 	})
 */
+package textrank
