@@ -97,7 +97,7 @@ type Sentence struct {
 // ByQty filter by occurrence of word.
 const ByQty = 0
 
-// ByQty filter by phrase weight.
+// ByRelation filter by phrase weight.
 const ByRelation = 1
 
 // FindSentences function has wrappers textrank.FindSentencesByRelationWeight

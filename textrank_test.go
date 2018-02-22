@@ -71,7 +71,7 @@ func TestOnMultiThread(t *testing.T) {
 	assertTheGnomeTestTextDefault(t, 2)
 }
 
-func assertTheGnomeTestTextDefault(t *testing.T, graphId int) {
+func assertTheGnomeTestTextDefault(t *testing.T, graphID int) {
 	mostPopulars := []string{
 		"gnome shell",
 		"icons tray",
@@ -84,7 +84,7 @@ func assertTheGnomeTestTextDefault(t *testing.T, graphId int) {
 		"dock dash",
 	}
 
-	phrases := FindPhrases(graphId)
+	phrases := FindPhrases(graphID)
 	max := len(mostPopulars) - 1
 
 	for i := 0; i < max; i++ {
@@ -103,7 +103,7 @@ func assertTheGnomeTestTextDefault(t *testing.T, graphId int) {
 		assert.Equal(t, true, found)
 	}
 
-	rankForCheck := GetRank(graphId)
+	rankForCheck := GetRank(graphID)
 
 	assert.Equal(t, float32(1), phrases[0].Weight)
 	assert.Equal(t, 5, phrases[0].Qty)
@@ -112,14 +112,14 @@ func assertTheGnomeTestTextDefault(t *testing.T, graphId int) {
 	assert.Equal(t, phrases[0].LeftID, rankForCheck.WordValID[phrases[0].Left])
 	assert.Equal(t, phrases[0].RightID, rankForCheck.WordValID[phrases[0].Right])
 
-	singleWords := FindSingleWords(graphId)
+	singleWords := FindSingleWords(graphID)
 
 	assert.Equal(t, "gnome", singleWords[0].Word)
 	assert.Equal(t, float32(1), singleWords[0].Weight)
 	assert.Equal(t, 12, singleWords[0].Qty)
 	assert.Equal(t, singleWords[0].ID, rankForCheck.WordValID[singleWords[0].Word])
 
-	sentencesByQtyWeight := FindSentencesByWordQtyWeight(graphId, 6)
+	sentencesByQtyWeight := FindSentencesByWordQtyWeight(graphID, 6)
 
 	assert.Equal(t, 6, len(sentencesByQtyWeight))
 	assert.Equal(t, 0, sentencesByQtyWeight[0].ID)
@@ -129,7 +129,7 @@ func assertTheGnomeTestTextDefault(t *testing.T, graphId int) {
 	assert.Equal(t, 7, sentencesByQtyWeight[4].ID)
 	assert.Equal(t, sentencesByQtyWeight[4].Value, rankForCheck.SentenceMap[sentencesByQtyWeight[4].ID])
 
-	sentencesByRelWeight := FindSentencesByRelationWeight(graphId, 6)
+	sentencesByRelWeight := FindSentencesByRelationWeight(graphID, 6)
 
 	assert.Equal(t, 6, len(sentencesByRelWeight))
 	assert.Equal(t, 2, sentencesByRelWeight[0].ID)
@@ -139,7 +139,7 @@ func assertTheGnomeTestTextDefault(t *testing.T, graphId int) {
 	assert.Equal(t, 19, sentencesByRelWeight[4].ID)
 	assert.Equal(t, sentencesByRelWeight[4].Value, rankForCheck.SentenceMap[sentencesByRelWeight[4].ID])
 
-	sentencesByPhrase := FindSentencesByPhraseChain(graphId, []string{
+	sentencesByPhrase := FindSentencesByPhraseChain(graphID, []string{
 		"gnome",
 		"shell",
 		"extension",
@@ -149,17 +149,17 @@ func assertTheGnomeTestTextDefault(t *testing.T, graphId int) {
 	assert.Equal(t, 19, sentencesByPhrase[1].ID)
 	assert.Equal(t, sentencesByPhrase[1].Value, rankForCheck.SentenceMap[sentencesByPhrase[1].ID])
 
-	sentenceIdStart := 10
-	foundSentences := FindSentencesFrom(graphId, sentenceIdStart, 3)
+	sentenceIDStart := 10
+	foundSentences := FindSentencesFrom(graphID, sentenceIDStart, 3)
 
-	assert.Equal(t, sentenceIdStart, foundSentences[0].ID)
-	assert.Equal(t, sentenceIdStart+1, foundSentences[1].ID)
-	assert.Equal(t, sentenceIdStart+2, foundSentences[2].ID)
+	assert.Equal(t, sentenceIDStart, foundSentences[0].ID)
+	assert.Equal(t, sentenceIDStart+1, foundSentences[1].ID)
+	assert.Equal(t, sentenceIDStart+2, foundSentences[2].ID)
 	assert.Equal(t, 3, len(foundSentences))
 	assert.Equal(t, foundSentences[0].Value, rankForCheck.SentenceMap[foundSentences[0].ID])
 }
 
-func assertTheGnomeTestTextMix(t *testing.T, graphId int) {
+func assertTheGnomeTestTextMix(t *testing.T, graphID int) {
 	mostPopulars := []string{
 		"gnome shell",
 		"gnome caffeine",
@@ -178,7 +178,7 @@ func assertTheGnomeTestTextMix(t *testing.T, graphId int) {
 		"gnome peeve",
 	}
 
-	phrases := FindPhrases(graphId)
+	phrases := FindPhrases(graphID)
 	max := len(mostPopulars) - 1
 
 	for i := 0; i < max; i++ {

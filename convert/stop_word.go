@@ -23,7 +23,6 @@ func getDefaultEnglish() []string {
 		"am",
 		"among",
 		"amongst",
-		"amoungst",
 		"amount",
 		"an",
 		"and",

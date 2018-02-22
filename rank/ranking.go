@@ -7,7 +7,7 @@ func Calculate(ranks *Rank, algorithm Algorithm) {
 
 func updateRanks(ranks *Rank, algorithm Algorithm) {
 	for x, xMap := range ranks.Relation.Node {
-		for y, _ := range xMap {
+		for y := range xMap {
 			qty := ranks.Relation.Node[x][y].Qty
 
 			if ranks.Relation.Max < qty {
@@ -36,7 +36,7 @@ func updateRanks(ranks *Rank, algorithm Algorithm) {
 	}
 
 	for x, xMap := range ranks.Relation.Node {
-		for y, _ := range xMap {
+		for y := range xMap {
 			qty := ranks.Relation.Node[x][y].Qty
 			sentenceIDs := ranks.Relation.Node[x][y].SentenceIDs
 			weight := algorithm.WeightingRelation(

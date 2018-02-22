@@ -15,8 +15,8 @@ type LanguageDefault struct {
 	languages   map[string][]string
 }
 
-// Constructor of the LanguageDefault Retrieves a pointer LanguageDefault. It
-// has setup to English by default.
+// NewLanguage constructor of the LanguageDefault Retrieves a pointer
+// LanguageDefault. It has setup to English by default.
 func NewLanguage() *LanguageDefault {
 	lang := &LanguageDefault{
 		"en",
