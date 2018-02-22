@@ -3,7 +3,7 @@
 [![GoDoc](https://godoc.org/github.com/DavidBelicza/TextRank?status.svg)](https://godoc.org/github.com/DavidBelicza/TextRank)
 [![License: MIT](https://img.shields.io/badge/License-MIT-ee00ee.svg)](https://github.com/DavidBelicza/TextRank/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/DavidBelicza/TextRank.svg?branch=master)](https://travis-ci.org/DavidBelicza/TextRank)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/fb0a0bbd2da54efc930939c76452253f)](https://www.codacy.com/app/DavidBelicza/TextRank?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DavidBelicza/TextRank&amp;utm_campaign=Badge_Grade)
+[![Go Report Card](https://goreportcard.com/badge/github.com/DavidBelicza/TextRank)](https://goreportcard.com/report/github.com/DavidBelicza/TextRank)
 [![Coverage Status](https://coveralls.io/repos/github/DavidBelicza/TextRank/badge.svg?branch=master)](https://coveralls.io/github/DavidBelicza/TextRank?branch=master)
 
 ## TextRank or Automatic summarization
