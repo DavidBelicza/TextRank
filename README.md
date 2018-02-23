@@ -23,7 +23,7 @@ import (
 )
 
 func main() {
-	rawText := ""Your long raw text, it could be a book. Lorem ipsum...""
+	rawText := "Your long raw text, it could be a book. Lorem ipsum..."
 	// ID of the text rank, any number.
 	id := 1
 	// Default Rule for parsing.
@@ -60,20 +60,20 @@ import (
 )
 
 func main() {
-	rawText := ""Your long raw text, it could be a book. Lorem ipsum...""
+	rawText := "Your long raw text, it could be a book. Lorem ipsum..."
 	// ID of the text rank, any number.
 	id := 1
 	// Default Rule for parsing.
 	rule := textrank.CreateDefaultRule()
 	// Default Language for filtering stop words.
 	language := textrank.CreateDefaultLanguage()
-	// Default algorithm for ranking text.
-	algorithmDef := textrank.CreateDefaultAlgorithm()
-
+	// Using a little bit more complex algorithm to ranking text.
+	algorithmMix := textrank.CreateMixedAlgorithm()
+	
 	// Add text.
 	textrank.Append(rawText, language, rule, id)
 	// Run the ranking.
-	textrank.Ranking(id, algorithmDef)
+	textrank.Ranking(id, algorithmMix)
 
 	// Get all phrases by weight.
 	rankedPhrases := textrank.FindPhrases(id)
@@ -97,7 +97,7 @@ import (
 )
 
 func main() {
-	rawText := ""Your long raw text, it could be a book. Lorem ipsum...""
+	rawText := "Your long raw text, it could be a book. Lorem ipsum..."
 	// ID of the text rank, any number.
 	id := 1
 	// Default Rule for parsing.
@@ -110,13 +110,13 @@ func main() {
 	// Active the Spanish.
 	language.SetActiveLanguage("es")
 	
-	// Using a little bit more complex algorithm to ranking text.
-	algorithmMix := textrank.CreateMixedAlgorithm()
+	// Default algorithm for ranking text.
+	algorithmDef := textrank.CreateDefaultAlgorithm()
 
 	// Add text.
 	textrank.Append(rawText, language, rule, id)
 	// Run the ranking.
-	textrank.Ranking(id, algorithmMix)
+	textrank.Ranking(id, algorithmDef)
 
 	// Get all phrases by weight.
 	rankedPhrases := textrank.FindPhrases(id)
