@@ -6,7 +6,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/DavidBelicza/TextRank)](https://goreportcard.com/report/github.com/DavidBelicza/TextRank)
 [![Coverage Status](https://coveralls.io/repos/github/DavidBelicza/TextRank/badge.svg?branch=master)](https://coveralls.io/github/DavidBelicza/TextRank?branch=master)
 
-This source code is an implementation of textrank algorithm up to Go 1.8, under MIT licence.
+This source code is an implementation of textrank algorithm, under MIT licence. The minimum requred Go version is 1.8.
 
 ## MOTIVATION
 
