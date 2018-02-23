@@ -6,12 +6,21 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/DavidBelicza/TextRank)](https://goreportcard.com/report/github.com/DavidBelicza/TextRank)
 [![Coverage Status](https://coveralls.io/repos/github/DavidBelicza/TextRank/badge.svg?branch=master)](https://coveralls.io/github/DavidBelicza/TextRank?branch=master)
 
+## Motivation
+
+If there was a program what could rank book size text's words, phrases and sentences continuously on multiple threads and it would be opened to modifing by objects, written in a simple, secure, static language and if it would be very well documented... Now, there is.
+
+## Features
+
+
 ## TextRank or Automatic summarization
 > Automatic summarization is the process of reducing a text document with a computer program in order to create a summary that retains the most important points of the original document. Technologies that can make a coherent summary take into account variables such as length, writing style and syntax. Automatic data summarization is part of machine learning and data mining. The main idea of summarization is to find a representative subset of the data, which contains the information of the entire set. Summarization technologies are used in a large number of sectors in industry today. - Wikipedia
 
 ## EXAMPLES
 
 ### Find the most important phrases
+
+This is the most basic and simplest usage of textrank.
 
 ```go
 package main
@@ -49,6 +58,8 @@ func main() {
 ```
 
 ### All possible pre-defined finder queries
+
+After ranking, the graph contains a lot of valuable data. There are functions in textrank package what contains logic to retrieve those data from the graph.
 
 ```go
 package main
@@ -109,6 +120,8 @@ func main() {
 
 ### Access to everything
 
+After ranking, the graph contains a lot of valuable data. The GetRank function allows access to the graph and every data can be retrieved from this structure.
+
 ```go
 package main
 
@@ -157,6 +170,8 @@ func main() {
 
 ### Adding text continuously
 
+It is possibe to add more text after another texts already have been added. The Ranking function can merge these multiple texts and it can recalculate the weights and all related data.
+
 ```go
 package main
 
@@ -204,6 +219,8 @@ func main() {
 
 ### Using different algorithm to ranking text
 
+There are two algorithm has implemented, it is possible to write custom algorithm by Algorithm interface and use it instead of defaults.
+
 ```go
 package main
 
@@ -240,6 +257,8 @@ func main() {
 ```
 
 ### Using multiple graphs
+
+Graph ID exists because it is possible run multiple independent text ranking processes.
 
 ```go
 package main
@@ -295,7 +314,9 @@ func main() {
 }
 ```
 
-### Using different non-English languages.
+### Using different non-English languages
+
+Engish is used by default but it is possible to add any language. To use other languages a stop word list is required what you can find here: https://github.com/stopwords-iso
 
 ```go
 package main
@@ -339,6 +360,8 @@ func main() {
 ```
 
 ### Asynchronous usage by goroutines
+
+It is thread safe. Independent graphs can recieve texts in the same time and can be extended by more text also in the same time.
 
 ```go
 package main
@@ -417,4 +440,7 @@ func main() {
 ```
 
 ## A simple visual representation
+
+The below image is a representation how works the simplest text ranking algorithm. This algorithm can be replaced by an another one by inject different Algorithm interface implementation.
+
 <img src="http://i.picresize.com/images/2018/01/30/PTn3Y.png" />
