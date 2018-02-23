@@ -9,7 +9,10 @@
 ## TextRank or Automatic summarization
 > Automatic summarization is the process of reducing a text document with a computer program in order to create a summary that retains the most important points of the original document. Technologies that can make a coherent summary take into account variables such as length, writing style and syntax. Automatic data summarization is part of machine learning and data mining. The main idea of summarization is to find a representative subset of the data, which contains the information of the entire set. Summarization technologies are used in a large number of sectors in industry today. - Wikipedia
 
-## Simplest regular usage
+## EXAMEPLES
+
+### Find the most important phrases
+
 ```go
 package main
 
@@ -20,18 +23,108 @@ import (
 )
 
 func main() {
-	newTRid := 1
-	rawText := "Your raw text, lorem ipsum..."
+	rawText := ""Your long raw text, it could be a book. Lorem ipsum...""
+	// ID of the text rank, any number.
+	id := 1
+	// Default Rule for parsing.
 	rule := textrank.CreateDefaultRule()
+	// Default Language for filtering stop words.
 	language := textrank.CreateDefaultLanguage()
-	algorithm := textrank.CreateDefaultAlgorithm()
+	// Default algorithm for ranking text.
+	algorithmDef := textrank.CreateDefaultAlgorithm()
 
-	textrank.Append(rawText, language, rule, newTRid)
-	textrank.Ranking(newTRid, algorithm)
+	// Add text.
+	textrank.Append(rawText, language, rule, id)
+	// Run the ranking.
+	textrank.Ranking(id, algorithmDef)
 
-	rankedPhrases := textrank.FindPhrases(newTRid)
+	// Get all phrases by weight.
+	rankedPhrases := textrank.FindPhrases(id)
 
-	fmt.Println(rankedPhrases)
+	// Most important phrase.
+	fmt.Println(rankedPhrases[0])
+	// Second important phrase.
+	fmt.Println(rankedPhrases[1])
+}
+```
+
+### Using different algorithm to ranking text
+
+```go
+package main
+
+import (
+	"fmt"
+	
+	"github.com/DavidBelicza/TextRank"
+)
+
+func main() {
+	rawText := ""Your long raw text, it could be a book. Lorem ipsum...""
+	// ID of the text rank, any number.
+	id := 1
+	// Default Rule for parsing.
+	rule := textrank.CreateDefaultRule()
+	// Default Language for filtering stop words.
+	language := textrank.CreateDefaultLanguage()
+	// Default algorithm for ranking text.
+	algorithmDef := textrank.CreateDefaultAlgorithm()
+
+	// Add text.
+	textrank.Append(rawText, language, rule, id)
+	// Run the ranking.
+	textrank.Ranking(id, algorithmDef)
+
+	// Get all phrases by weight.
+	rankedPhrases := textrank.FindPhrases(id)
+
+	// Most important phrase.
+	fmt.Println(rankedPhrases[0])
+	// Second important phrase.
+	fmt.Println(rankedPhrases[1])
+}
+```
+
+### Using different non-English languages.
+
+```go
+package main
+
+import (
+	"fmt"
+	
+	"github.com/DavidBelicza/TextRank"
+)
+
+func main() {
+	rawText := ""Your long raw text, it could be a book. Lorem ipsum...""
+	// ID of the text rank, any number.
+	id := 1
+	// Default Rule for parsing.
+	rule := textrank.CreateDefaultRule()
+	// Default Language for filtering stop words.
+	language := textrank.CreateDefaultLanguage()
+	
+	// Add Spanish stop words (just some example).
+	language.SetWords("es", []string{"uno", "dos", "tres", "yo", "es", "eres"})
+	// Active the Spanish.
+	language.SetActiveLanguage("es")
+	
+	// Using a little bit more complex algorithm to ranking text.
+	algorithmMix := textrank.CreateMixedAlgorithm()
+
+	// Add text.
+	textrank.Append(rawText, language, rule, id)
+	// Run the ranking.
+	textrank.Ranking(id, algorithmMix)
+
+	// Get all phrases by weight.
+	rankedPhrases := textrank.FindPhrases(id)
+
+	// Most important phrase.
+	fmt.Println(rankedPhrases[0])
+	// Second important phrase.
+	fmt.Println(rankedPhrases[1])
 }
 ```
 
