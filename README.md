@@ -48,6 +48,53 @@ func main() {
 }
 ```
 
+### Adding text continuously
+
+```go
+package main
+
+import (
+	"fmt"
+	
+	"github.com/DavidBelicza/TextRank"
+)
+
+func main() {
+	rawText := "Your long raw text, it could be a book. Lorem ipsum..."
+	// ID of the text rank, any number.
+	id := 1
+	// Default Rule for parsing.
+	rule := textrank.CreateDefaultRule()
+	// Default Language for filtering stop words.
+	language := textrank.CreateDefaultLanguage()
+	// Default algorithm for ranking text.
+	algorithmDef := textrank.CreateDefaultAlgorithm()
+
+	// Add text.
+	textrank.Append(rawText, language, rule, id)
+	// Run the ranking.
+	textrank.Ranking(id, algorithmDef)
+
+	rawText2 := "Another book or article..."
+	rawText3 := "Third another book or article..."
+
+	// Add text to the previously added text.
+	textrank.Append(rawText2, language, rule, id)
+	// Add text to the previously added text.
+	textrank.Append(rawText3, language, rule, id)
+	// Run the ranking to the whole composed text.
+	textrank.Ranking(id, algorithmDef)
+
+	// Get all phrases by weight.
+	rankedPhrases := textrank.FindPhrases(id)
+
+	// Most important phrase.
+	fmt.Println(rankedPhrases[0])
+	// Second important phrase.
+	fmt.Println(rankedPhrases[1])
+}
+```
+
 ### Using different algorithm to ranking text
 
 ```go
@@ -82,6 +129,62 @@ func main() {
 	fmt.Println(rankedPhrases[0])
 	// Second important phrase.
 	fmt.Println(rankedPhrases[1])
+}
+```
+
+### Using multiple graphs.
+
+```go
+package main
+
+import (
+	"fmt"
+	
+	"github.com/DavidBelicza/TextRank"
+)
+
+func main() {
+	rawText := "Your long raw text, it could be a book. Lorem ipsum..."
+	// ID of the text rank, any number.
+	firstGraphID := 1
+	// Default Rule for parsing.
+	rule := textrank.CreateDefaultRule()
+	// Default Language for filtering stop words.
+	language := textrank.CreateDefaultLanguage()
+	// Default algorithm for ranking text.
+	algorithmDef := textrank.CreateDefaultAlgorithm()
+
+	// Add text.
+	textrank.Append(rawText, language, rule, firstGraphID)
+	// Run the ranking.
+	textrank.Ranking(firstGraphID, algorithmDef)
+
+	// ID of the text rank, any number.
+	secondGraphID := 2
+
+	// Using a little bit more complex algorithm to ranking text.
+	algorithmMix := textrank.CreateMixedAlgorithm()
+
+	// Add text to the second graph.
+	textrank.Append(rawText, language, rule, secondGraphID)
+	// Run the ranking on the second graph.
+	textrank.Ranking(secondGraphID, algorithmMix)
+
+	// Get all phrases by weight from first graph.
+	rankedPhrases := textrank.FindPhrases(firstGraphID)
+
+	// Most important phrase from first graph.
+	fmt.Println(rankedPhrases[0])
+	// Second important phrase from first graph.
+	fmt.Println(rankedPhrases[1])
+
+	// Get all phrases by weight from second graph.
+	rankedPhrases2 := textrank.FindPhrases(secondGraphID)
+
+	// Most important phrase from second graph.
+	fmt.Println(rankedPhrases2[0])
+	// Second important phrase from second graph.
+	fmt.Println(rankedPhrases2[1])
 }
 ```
 
