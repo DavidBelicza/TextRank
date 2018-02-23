@@ -18,14 +18,14 @@ If there was a program what could rank book size text's words, phrases and sente
 * Find the most important words.
 * Find the most important N sentences. 
 	* Importance by phrase weights.
-	* Importance by phrase weights.
+	* Importance by word occurrence.
 * Find the first N sentences, start from Xth sentence.
 * Find sentences by phrase chains ordered by position in text.
 * Access to the whole ranked data.
 * Support more languages.
 * Algorithm for weighting can be modified by interface implementation.
 * Parser can be modified by interface implementation.
-* Multi thread safe.
+* Multi thread support.
 
 
 ## TEXTRANK OR AUTOMATIC SUMMARIZATION
