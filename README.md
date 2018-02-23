@@ -6,14 +6,29 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/DavidBelicza/TextRank)](https://goreportcard.com/report/github.com/DavidBelicza/TextRank)
 [![Coverage Status](https://coveralls.io/repos/github/DavidBelicza/TextRank/badge.svg?branch=master)](https://coveralls.io/github/DavidBelicza/TextRank?branch=master)
 
-## Motivation
+This source code is an implementation of textrank algorithm up to Go 1.8, under MIT licence.
+
+## MOTIVATION
 
 If there was a program what could rank book size text's words, phrases and sentences continuously on multiple threads and it would be opened to modifing by objects, written in a simple, secure, static language and if it would be very well documented... Now, there is.
 
-## Features
+## FEATURES
+
+* Find the most important phrases.
+* Find the most important words.
+* Find the most important N sentences. 
+	* Importance by phrase weights.
+	* Importance by phrase weights.
+* Find the first N sentences, start from Xth sentence.
+* Find sentences by phrase chains ordered by position in text.
+* Access to the whole ranked data.
+* Support more languages.
+* Algorithm for weighting can be modified by interface implementation.
+* Parser can be modified by interface implementation.
+* Multi thread safe.
 
 
-## TextRank or Automatic summarization
+## TEXTRANK OR AUTOMATIC SUMMARIZATION
 > Automatic summarization is the process of reducing a text document with a computer program in order to create a summary that retains the most important points of the original document. Technologies that can make a coherent summary take into account variables such as length, writing style and syntax. Automatic data summarization is part of machine learning and data mining. The main idea of summarization is to find a representative subset of the data, which contains the information of the entire set. Summarization technologies are used in a large number of sectors in industry today. - Wikipedia
 
 ## EXAMPLES
