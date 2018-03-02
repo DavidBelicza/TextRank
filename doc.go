@@ -12,17 +12,20 @@ the information of the entire set. Summarization technologies are used in a
 large number of sectors in industry today." - Wikipedia
 
 	rawText := "Lorem ipsum sit dolor amet..."
-	rule := CreateDefaultRule()
-	language := CreateDefaultLanguage()
-	algorithm := CreateDefaultAlgorithm()
+	tr := NewTextRank()
+	rule := NewDefaultRule()
+	language := NewDefaultLanguage()
+	algorithm := NewDefaultAlgorithm()
 
-	Append(rawText, language, rule, 1)
-	Ranking(1, algorithm)
+	tr.Populate(rawText, language, rule)
+	tr.Ranking(algorithmDef)
 
-	FindSentencesByPhraseChain(1, []string{
+	FindSentencesByPhraseChain(tr, []string{
 		"captain",
 		"james",
 		"kirk",
 	})
+
+	FindPhrases(textRank)
 */
 package textrank
