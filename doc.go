@@ -13,9 +13,9 @@ large number of sectors in industry today." - Wikipedia
 
 	rawText := "Lorem ipsum sit dolor amet..."
 	tr := NewTextRank()
-	rule := CreateDefaultRule()
-	language := CreateDefaultLanguage()
-	algorithm := CreateDefaultAlgorithm()
+	rule := NewDefaultRule()
+	language := NewDefaultLanguage()
+	algorithm := NewDefaultAlgorithm()
 
 	tr.Populate(rawText, language, rule)
 	tr.Ranking(algorithmDef)

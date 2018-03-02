@@ -20,6 +20,44 @@ func NewTextRank() *TextRank {
 	}
 }
 
+// NewDefaultRule function retrieves a default Rule object what works in the
+// most cases in English or similar Latin languages like French or Spanish. The
+// Rule defines raw text how should be split to sentences and words. Because
+// Rule is an interface it's possible modify the ranking by inject different
+// Rule implementation. This is the 2nd step to use TextRank.
+func NewDefaultRule() *parse.RuleDefault {
+	return parse.NewRule()
+}
+
+// NewDefaultLanguage function retrieves a default Language object. It defines
+// what words are real and what words are just Stop Words or useless Junk Words.
+// It uses the default English Stop Words, but it's possible to set different
+// Stop Words in English or any other languages. Because Language is an
+// interface it's possible to modify the ranking by inject different Language
+// implementation. This is the 3rd step to use TextRank.
+func NewDefaultLanguage() *convert.LanguageDefault {
+	return convert.NewLanguage()
+}
+
+// NewDefaultAlgorithm function retrieves an Algorithm object. It defines how
+// should work the text ranking algorithm, the weighting. This is the general
+// text rank by weighting the connection between the words to find the strongest
+// phrases. Because Algorithm is an interface it's possible to modify the
+// ranking algorithm by inject different implementation. This is the 4th step to
+// use TextRank.
+func NewDefaultAlgorithm() *rank.AlgorithmDefault {
+	return rank.NewAlgorithmDefault()
+}
+
+// NewMixedAlgorithm function retrieves an Algorithm object. It defines how
+// should work the text ranking algorithm, the weighting. This is an alternative
+// way to ranking words by weighting the number of the words. Because Algorithm
+// is an interface it's possible to modify the ranking algorithm by inject
+// different implementation. This is  the 4th step to use TextRank.
+func NewMixedAlgorithm() *rank.AlgorithmMixed {
+	return rank.NewAlgorithmMixed()
+}
+
 // Populate method adds a raw text to the text-ranking graph. It parses,
 // tokenize the raw text and prepares it to weighting and scoring. It's possible
 // to append a new raw text to an existing one even if the previously text is
@@ -29,9 +67,9 @@ func NewTextRank() *TextRank {
 // contain new lines, break lines or any unnecessary text parts, but it should
 // not contain HTML tags or codes.
 //
-// lang Language object can be loaded from CreateDefaultLanguage function.
+// lang Language object can be loaded from NewDefaultLanguage function.
 //
-// rule Rule object can be loaded from CreateDefaultRule function.
+// rule Rule object can be loaded from NewDefaultRule function.
 func (textRank *TextRank) Populate(
 	text string,
 	lang convert.Language,
@@ -54,48 +92,10 @@ func (textRank *TextRank) Ranking(algorithm rank.Algorithm) {
 }
 
 // GetRankData method retrieves the Rank data to that case if the developer want
-// access to the whole graph and sentences, words, weights and all of the
-// data to analyze it or just implement a new search logic or finder method.
+// access to the whole graph and sentences, words, weights and all of the data
+// to analyze it or just implement a new search logic or finder method.
 func (textRank *TextRank) GetRankData() *rank.Rank {
 	return textRank.rank
-}
-
-// CreateDefaultRule function retrieves a default Rule object what works in the
-// most cases in English or similar Latin languages like French or Spanish. The
-// Rule defines raw text how should be split to sentences and words. Because
-// Rule is an interface it's possible modify the ranking by inject different
-// Rule implementation. This is the 2nd step to use TextRank.
-func CreateDefaultRule() *parse.RuleDefault {
-	return parse.NewRule()
-}
-
-// CreateDefaultLanguage function retrieves a default Language object. It
-// defines what words are real and what words are just Stop Words or useless
-// Junk Words. It uses the default English Stop Words, but it's possible to set
-// different Stop Words in English or any other languages. Because Language is
-// an interface it's possible to modify the ranking by inject different
-// Language implementation. This is the 3rd step to use TextRank.
-func CreateDefaultLanguage() *convert.LanguageDefault {
-	return convert.NewLanguage()
-}
-
-// CreateDefaultAlgorithm function retrieves an Algorithm object. It defines how
-// should work the text ranking algorithm, the weighting. This is the general
-// text rank by weighting the connection between the words to find the strongest
-// phrases. Because Algorithm is an interface it's possible to modify the
-// ranking algorithm by inject different implementation. This is the 4th step to
-// use TextRank.
-func CreateDefaultAlgorithm() *rank.AlgorithmDefault {
-	return rank.NewAlgorithmDefault()
-}
-
-// CreateMixedAlgorithm function retrieves an Algorithm object. It defines how
-// should work the text ranking algorithm, the weighting. This is an alternative
-// way to ranking words by weighting the number of the words. Because Algorithm
-// is an interface it's possible to modify the ranking algorithm by inject
-// different implementation. This is  the 4th step to use TextRank.
-func CreateMixedAlgorithm() *rank.AlgorithmMixed {
-	return rank.NewAlgorithmMixed()
 }
 
 // FindPhrases function retrieves a slice of Phrase structures by TextRank
@@ -153,9 +153,9 @@ func FindSentencesByWordQtyWeight(
 // possible combination is 3 factorial (3!) = 3 * 2 * 1.
 //
 //    rawText := "Long raw text, lorem ipsum..."
-//    rule := CreateDefaultRule()
-//    language := CreateDefaultLanguage()
-//    algorithm := CreateDefaultAlgorithm()
+//    rule := NewDefaultRule()
+//    language := NewDefaultLanguage()
+//    algorithm := NewDefaultAlgorithm()
 //
 //    Append(rawText, language, rule, 1)
 //    Ranking(1, algorithm)
