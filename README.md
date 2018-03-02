@@ -10,7 +10,7 @@ This source code is an implementation of textrank algorithm, under MIT licence. 
 
 ## MOTIVATION
 
-If there was a program what could rank book size text's words, phrases and sentences continuously on multiple threads and it would be opened to modifing by objects, written in a simple, secure, static language and if it would be very well documented... Now, there is.
+If there was a program what could rank book size text's words, phrases and sentences continuously on multiple threads and it would be opened to modifing by objects, written in a simple, secure, static language and if it would be very well documented... Now, here it is.
 
 ## FEATURES
 
@@ -48,22 +48,22 @@ import (
 
 func main() {
 	rawText := "Your long raw text, it could be a book. Lorem ipsum..."
-	// ID of the text rank, any number.
-	id := 1
+	// TextRank object
+	tr := textrank.NewTextRank()
 	// Default Rule for parsing.
-	rule := textrank.CreateDefaultRule()
+	rule := textrank.NewDefaultRule()
 	// Default Language for filtering stop words.
-	language := textrank.CreateDefaultLanguage()
+	language := textrank.NewDefaultLanguage()
 	// Default algorithm for ranking text.
-	algorithmDef := textrank.CreateDefaultAlgorithm()
+	algorithmDef := textrank.NewDefaultAlgorithm()
 
 	// Add text.
-	textrank.Append(rawText, language, rule, id)
+	tr.Populate(rawText, language, rule)
 	// Run the ranking.
-	textrank.Ranking(id, algorithmDef)
+	tr.Ranking(algorithmDef)
 
 	// Get all phrases by weight.
-	rankedPhrases := textrank.FindPhrases(id)
+	rankedPhrases := textrank.FindPhrases(tr)
 
 	// Most important phrase.
 	fmt.Println(rankedPhrases[0])
@@ -87,47 +87,47 @@ import (
 
 func main() {
 	rawText := "Your long raw text, it could be a book. Lorem ipsum..."
-	// ID of the text rank, any number.
-	id := 1
+	// TextRank object
+	tr := textrank.NewTextRank()
 	// Default Rule for parsing.
-	rule := textrank.CreateDefaultRule()
+	rule := textrank.NewDefaultRule()
 	// Default Language for filtering stop words.
-	language := textrank.CreateDefaultLanguage()
+	language := textrank.NewDefaultLanguage()
 	// Default algorithm for ranking text.
-	algorithmDef := textrank.CreateDefaultAlgorithm()
+	algorithmDef := textrank.NewDefaultAlgorithm()
 
 	// Add text.
-	textrank.Append(rawText, language, rule, id)
+	tr.Populate(rawText, language, rule)
 	// Run the ranking.
-	textrank.Ranking(id, algorithmDef)
+	tr.Ranking(algorithmDef)
 
 	// Get all phrases order by weight.
-	rankedPhrases := textrank.FindPhrases(id)
+	rankedPhrases := textrank.FindPhrases(tr)
 	// Most important phrase.
 	fmt.Println(rankedPhrases[0])
 
 	// Get all words order by weight.
-	words := textrank.FindSingleWords(id)
+	words := textrank.FindSingleWords(tr)
 	// Most important word.
 	fmt.Println(words[0])
 
 	// Get the most important 10 sentences. Importance by phrase weights.
-	sentences := textrank.FindSentencesByRelationWeight(id, 10)
+	sentences := textrank.FindSentencesByRelationWeight(tr, 10)
 	// Found sentences
 	fmt.Println(sentences)
 
 	// Get the most important 10 sentences. Importance by word occurrence.
-	sentences = textrank.FindSentencesByWordQtyWeight(id, 10)
+	sentences = textrank.FindSentencesByWordQtyWeight(tr, 10)
 	// Found sentences
 	fmt.Println(sentences)
 
 	// Get the first 10 sentences, start from 5th sentence.
-	sentences = textrank.FindSentencesFrom(id, 5, 10)
+	sentences = textrank.FindSentencesFrom(tr, 5, 10)
 	// Found sentences
 	fmt.Println(sentences)
 
 	// Get sentences by phrase/word chains order by position in text.
-	sentencesPh := textrank.FindSentencesByPhraseChain(id, []string{"gnome", "shell", "extension"})
+	sentencesPh := textrank.FindSentencesByPhraseChain(tr, []string{"gnome", "shell", "extension"})
 	// Found sentence.
 	fmt.Println(sentencesPh[0])
 }
@@ -148,22 +148,22 @@ import (
 
 func main() {
 	rawText := "Your long raw text, it could be a book. Lorem ipsum..."
-	// ID of the text rank, any number.
-	id := 1
+	// TextRank object
+	tr := textrank.NewTextRank()
 	// Default Rule for parsing.
-	rule := textrank.CreateDefaultRule()
+	rule := textrank.NewDefaultRule()
 	// Default Language for filtering stop words.
-	language := textrank.CreateDefaultLanguage()
+	language := textrank.NewDefaultLanguage()
 	// Default algorithm for ranking text.
-	algorithmDef := textrank.CreateDefaultAlgorithm()
+	algorithmDef := textrank.NewDefaultAlgorithm()
 
 	// Add text.
-	textrank.Append(rawText, language, rule, id)
+	tr.Populate(rawText, language, rule)
 	// Run the ranking.
-	textrank.Ranking(id, algorithmDef)
+	tr.Ranking(algorithmDef)
 
 	// Get the rank graph.
-	rankData := textrank.GetRank(id)
+	rankData := tr.GetRankData()
 
 	// Get word ID by token/word.
 	wordId := rankData.WordValID["gnome"]
@@ -198,32 +198,32 @@ import (
 
 func main() {
 	rawText := "Your long raw text, it could be a book. Lorem ipsum..."
-	// ID of the text rank, any number.
-	id := 1
+	// TextRank object
+	tr := textrank.NewTextRank()
 	// Default Rule for parsing.
-	rule := textrank.CreateDefaultRule()
+	rule := textrank.NewDefaultRule()
 	// Default Language for filtering stop words.
-	language := textrank.CreateDefaultLanguage()
+	language := textrank.NewDefaultLanguage()
 	// Default algorithm for ranking text.
-	algorithmDef := textrank.CreateDefaultAlgorithm()
+	algorithmDef := textrank.NewDefaultAlgorithm()
 
 	// Add text.
-	textrank.Append(rawText, language, rule, id)
+	tr.Populate(rawText, language, rule)
 	// Run the ranking.
-	textrank.Ranking(id, algorithmDef)
+	tr.Ranking(algorithmDef)
 
 	rawText2 := "Another book or article..."
 	rawText3 := "Third another book or article..."
 
 	// Add text to the previously added text.
-	textrank.Append(rawText2, language, rule, id)
+	tr.Populate(rawText2, language, rule)
 	// Add text to the previously added text.
-	textrank.Append(rawText3, language, rule, id)
+	tr.Populate(rawText3, language, rule)
 	// Run the ranking to the whole composed text.
-	textrank.Ranking(id, algorithmDef)
+	tr.Ranking(algorithmDef)
 
 	// Get all phrases by weight.
-	rankedPhrases := textrank.FindPhrases(id)
+	rankedPhrases := textrank.FindPhrases(tr)
 
 	// Most important phrase.
 	fmt.Println(rankedPhrases[0])
@@ -247,22 +247,22 @@ import (
 
 func main() {
 	rawText := "Your long raw text, it could be a book. Lorem ipsum..."
-	// ID of the text rank, any number.
-	id := 1
+	// TextRank object
+	tr := textrank.NewTextRank()
 	// Default Rule for parsing.
-	rule := textrank.CreateDefaultRule()
+	rule := textrank.NewDefaultRule()
 	// Default Language for filtering stop words.
-	language := textrank.CreateDefaultLanguage()
+	language := textrank.NewDefaultLanguage()
 	// Using a little bit more complex algorithm to ranking text.
-	algorithmMix := textrank.CreateMixedAlgorithm()
-	
+	algorithmMix := textrank.NewMixedAlgorithm()
+
 	// Add text.
-	textrank.Append(rawText, language, rule, id)
+	tr.Populate(rawText, language, rule)
 	// Run the ranking.
-	textrank.Ranking(id, algorithmMix)
+	tr.Ranking(algorithmMix)
 
 	// Get all phrases by weight.
-	rankedPhrases := textrank.FindPhrases(id)
+	rankedPhrases := textrank.FindPhrases(tr)
 
 	// Most important phrase.
 	fmt.Println(rankedPhrases[0])
@@ -286,33 +286,33 @@ import (
 
 func main() {
 	rawText := "Your long raw text, it could be a book. Lorem ipsum..."
-	// ID of the text rank, any number.
-	firstGraphID := 1
+	// 1th TextRank object
+	tr1 := textrank.NewTextRank()
 	// Default Rule for parsing.
-	rule := textrank.CreateDefaultRule()
+	rule := textrank.NewDefaultRule()
 	// Default Language for filtering stop words.
-	language := textrank.CreateDefaultLanguage()
+	language := textrank.NewDefaultLanguage()
 	// Default algorithm for ranking text.
-	algorithmDef := textrank.CreateDefaultAlgorithm()
+	algorithmDef := textrank.NewDefaultAlgorithm()
 
 	// Add text.
-	textrank.Append(rawText, language, rule, firstGraphID)
+	tr1.Populate(rawText, language, rule)
 	// Run the ranking.
-	textrank.Ranking(firstGraphID, algorithmDef)
+	tr1.Ranking(algorithmDef)
 
-	// ID of the text rank, any number.
-	secondGraphID := 2
+	// 2nd TextRank object
+	tr2 := textrank.NewTextRank()
 
 	// Using a little bit more complex algorithm to ranking text.
-	algorithmMix := textrank.CreateMixedAlgorithm()
+	algorithmMix := textrank.NewMixedAlgorithm()
 
 	// Add text to the second graph.
-	textrank.Append(rawText, language, rule, secondGraphID)
+	tr2.Populate(rawText, language, rule)
 	// Run the ranking on the second graph.
-	textrank.Ranking(secondGraphID, algorithmMix)
+	tr2.Ranking(algorithmMix)
 
 	// Get all phrases by weight from first graph.
-	rankedPhrases := textrank.FindPhrases(firstGraphID)
+	rankedPhrases := textrank.FindPhrases(tr1)
 
 	// Most important phrase from first graph.
 	fmt.Println(rankedPhrases[0])
@@ -320,7 +320,7 @@ func main() {
 	fmt.Println(rankedPhrases[1])
 
 	// Get all phrases by weight from second graph.
-	rankedPhrases2 := textrank.FindPhrases(secondGraphID)
+	rankedPhrases2 := textrank.FindPhrases(tr2)
 
 	// Most important phrase from second graph.
 	fmt.Println(rankedPhrases2[0])
@@ -344,28 +344,28 @@ import (
 
 func main() {
 	rawText := "Your long raw text, it could be a book. Lorem ipsum..."
-	// ID of the text rank, any number.
-	id := 1
+	// TextRank object
+	tr := textrank.NewTextRank()
 	// Default Rule for parsing.
-	rule := textrank.CreateDefaultRule()
+	rule := textrank.NewDefaultRule()
 	// Default Language for filtering stop words.
-	language := textrank.CreateDefaultLanguage()
-	
+	language := textrank.NewDefaultLanguage()
+
 	// Add Spanish stop words (just some example).
 	language.SetWords("es", []string{"uno", "dos", "tres", "yo", "es", "eres"})
 	// Active the Spanish.
 	language.SetActiveLanguage("es")
-	
+
 	// Default algorithm for ranking text.
-	algorithmDef := textrank.CreateDefaultAlgorithm()
+	algorithmDef := textrank.NewDefaultAlgorithm()
 
 	// Add text.
-	textrank.Append(rawText, language, rule, id)
+	tr.Populate(rawText, language, rule)
 	// Run the ranking.
-	textrank.Ranking(id, algorithmDef)
+	tr.Ranking(algorithmDef)
 
 	// Get all phrases by weight.
-	rankedPhrases := textrank.FindPhrases(id)
+	rankedPhrases := textrank.FindPhrases(tr)
 
 	// Most important phrase.
 	fmt.Println(rankedPhrases[0])
@@ -389,15 +389,15 @@ import (
 )
 
 func main() {
-// A flag when program has to stop.
+	// A flag when program has to stop.
 	stopProgram := false
 	// Channel.
 	stream := make(chan string)
-	// The text rank graph ID.
-	id := 1
+	// TextRank object.
+	tr := textrank.NewTextRank()
 
 	// Open new thread/routine
-	go func() {
+	go func(tr *textrank.TextRank) {
 		// 3 texts.
 		rawTexts := []string{
 			"Very long text...",
@@ -409,7 +409,7 @@ func main() {
 		for _, rawText := range rawTexts {
 			stream <- rawText
 		}
-	}()
+	}(tr)
 
 	// Open new thread/routine
 	go func() {
@@ -421,16 +421,16 @@ func main() {
 			rawText := <-stream
 
 			// Default Rule for parsing.
-			rule := textrank.CreateDefaultRule()
+			rule := textrank.NewDefaultRule()
 			// Default Language for filtering stop words.
-			language := textrank.CreateDefaultLanguage()
+			language := textrank.NewDefaultLanguage()
 			// Default algorithm for ranking text.
-			algorithm := textrank.CreateDefaultAlgorithm()
+			algorithm := textrank.NewDefaultAlgorithm()
 
 			// Add text.
-			textrank.Append(rawText, language, rule, id)
+			tr.Populate(rawText, language, rule)
 			// Run the ranking.
-			textrank.Ranking(id, algorithm)
+			tr.Ranking(algorithm)
 
 			// Set stopProgram flag to true when all 3 text have been added.
 			if i == 3 {
@@ -448,13 +448,13 @@ func main() {
 	}
 
 	// Most important phrase.
-	phrases := textrank.FindPhrases(id)
+	phrases := textrank.FindPhrases(tr)
 	// Second important phrase.
 	fmt.Println(phrases[0])
 }
 ```
 
-## A simple visual representation
+## A SIMPLE VISUAL REPRESENTATION
 
 The below image is a representation how works the simplest text ranking algorithm. This algorithm can be replaced by an another one by inject different Algorithm interface implementation.
 
