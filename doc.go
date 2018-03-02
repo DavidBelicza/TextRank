@@ -365,7 +365,7 @@ https://github.com/stopwords-iso
 
 Asynchronous usage by goroutines:
 
-It is thread safe. Independent graphs can recieve texts in the same time and can
+It is thread safe. Independent graphs can receive texts in the same time and can
 be extended by more text also in the same time.
 
 	package main
