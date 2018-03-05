@@ -82,7 +82,7 @@ func assertTheGnomeTestTextDefault(t *testing.T, textRank *TextRank) {
 		"gnome caffeine",
 		"key tab",
 		"key changed",
-		"activities overlay",
+		"overlay activities",
 		"auto suspend",
 		"dock dash",
 	}
