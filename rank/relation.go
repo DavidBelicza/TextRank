@@ -9,8 +9,8 @@ package rank
 // Node is contains the Scores. Firs ID is the word 1, second ID is the word 2,
 // and the value is the Score what contains the data about their relation.
 type Relation struct {
-	Max  int
-	Min  int
+	Max  float32
+	Min  float32
 	Node map[int]map[int]Score
 }
 

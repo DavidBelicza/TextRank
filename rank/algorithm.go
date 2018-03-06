@@ -1,6 +1,9 @@
 package rank
 
-import "math"
+import (
+	"math"
+	"fmt"
+)
 
 // Algorithm interface and its methods make possible the polimorf usage of
 // weighting process.
@@ -8,20 +11,12 @@ type Algorithm interface {
 	WeightingRelation(
 		word1ID int,
 		word2ID int,
-		relationQty int,
-		relationMin int,
-		relationMax int,
-		word1Qty int,
-		word2Qty int,
-		wordQtyMin int,
-		wordQtyMax int,
+		rank *Rank,
 	) float32
 
 	WeightingHits(
 		wordID int,
-		wordQty int,
-		wordMin int,
-		wordMax int,
+		rank *Rank,
 	) float32
 }
 
@@ -40,38 +35,30 @@ func NewAlgorithmDefault() *AlgorithmDefault {
 func (a *AlgorithmDefault) WeightingRelation(
 	word1ID int,
 	word2ID int,
-	relationQty int,
-	relationMin int,
-	relationMax int,
-	word1Qty int,
-	word2Qty int,
-	wordQtyMin int,
-	wordQtyMax int,
+	rank *Rank,
 ) float32 {
-	weight := (float32(relationQty) - float32(relationMin)) / (float32(relationMax) - float32(relationMin))
+	relationQty := rank.Relation.Node[word1ID][word2ID].Qty
 
-	if math.IsNaN(float64(weight)) {
+	if math.IsNaN(float64(relationQty)) {
 		return 0
 	}
 
-	return weight
+	return float32(relationQty)
 }
 
 // WeightingHits method ranks the words by their number of usage. It always
 // retrieves a float number between 0.00 and 1.00.
 func (a *AlgorithmDefault) WeightingHits(
 	wordID int,
-	wordQty int,
-	wordMin int,
-	wordMax int,
+	rank *Rank,
 ) float32 {
-	weight := (float32(wordQty) - float32(wordMin)) / (float32(wordMax) - float32(wordMin))
+	weight := rank.Words[wordID].Qty
 
 	if math.IsNaN(float64(weight)) {
 		return 0
 	}
 
-	return weight
+	return float32(weight)
 }
 
 // AlgorithmMixed struct is the combined implementation of Algorithm. A good
@@ -90,40 +77,91 @@ func NewAlgorithmMixed() *AlgorithmMixed {
 func (a *AlgorithmMixed) WeightingRelation(
 	word1ID int,
 	word2ID int,
-	relationQty int,
-	relationMin int,
-	relationMax int,
-	word1Qty int,
-	word2Qty int,
-	wordQtyMin int,
-	wordQtyMax int,
+	rank *Rank,
 ) float32 {
-	min := float32(relationMin + wordQtyMin)
-	max := float32(relationMax + wordQtyMax)
-	qty := float32(relationQty + word1Qty)
+	relationQty := rank.Relation.Node[word1ID][word2ID].Qty
 
-	weight := (qty - min) / (max - min)
+	l := false
+	if rank.Words[word1ID].Token == "extension" && rank.Words[word2ID].Token == "gnome" {
+		fmt.Println("run")
+		l = true
+	}
 
-	if math.IsNaN(float64(weight)) {
+	logging := func(word1ID int, word2ID int) {
+		if l {
+			fmt.Println(rank.Words[word1ID].Token + " - " + rank.Words[word2ID].Token)
+		}
+	}
+
+	qty := 0;
+
+	for otherW2ID := range rank.Words[word1ID].ConnectionRight {
+		if otherW2ID != word2ID {
+			if v, ok := rank.Relation.Node[word1ID][otherW2ID]; ok {
+				qty += v.Qty
+				logging(word1ID, otherW2ID)
+			} else if v, ok := rank.Relation.Node[otherW2ID][word1ID]; ok {
+				logging(otherW2ID, word1ID)
+				qty += v.Qty
+			}
+		}
+	}
+
+	for otherW2ID := range rank.Words[word1ID].ConnectionLeft {
+		if otherW2ID != word2ID {
+			if v, ok := rank.Relation.Node[word1ID][otherW2ID]; ok {
+				qty += v.Qty
+				logging(word1ID, otherW2ID)
+			} else if v, ok := rank.Relation.Node[otherW2ID][word1ID]; ok {
+				qty += v.Qty
+				logging(otherW2ID, word1ID)
+			}
+		}
+	}
+
+	for otherW1ID := range rank.Words[word2ID].ConnectionRight {
+		if otherW1ID != word1ID {
+			if v, ok := rank.Relation.Node[word2ID][otherW1ID]; ok {
+				qty += v.Qty
+				logging(word2ID, otherW1ID)
+			} else if v, ok := rank.Relation.Node[otherW1ID][word2ID]; ok {
+				qty += v.Qty
+				logging(otherW1ID, word2ID)
+			}
+		}
+	}
+
+	for otherW1ID := range rank.Words[word2ID].ConnectionLeft {
+		if otherW1ID != word1ID {
+			if v, ok := rank.Relation.Node[word2ID][otherW1ID]; ok {
+				qty += v.Qty
+				logging(word2ID, otherW1ID)
+			} else if v, ok := rank.Relation.Node[otherW1ID][word2ID]; ok {
+				qty += v.Qty
+				logging(otherW1ID, word2ID)
+			}
+		}
+	}
+
+	if math.IsNaN(float64(relationQty)) {
 		return 0
 	}
 
-	return weight
+	//@todo word count?
+	return float32(relationQty) + (float32(qty)/100)
 }
 
 // WeightingHits method ranks the words by their number of usage. It always
 // retrieves a float number between 0.00 and 1.00.
 func (a *AlgorithmMixed) WeightingHits(
 	wordID int,
-	wordQty int,
-	wordMin int,
-	wordMax int,
+	rank *Rank,
 ) float32 {
-	weight := (float32(wordQty) - float32(wordMin)) / (float32(wordMax) - float32(wordMin))
+	weight := rank.Words[wordID].Qty
 
 	if math.IsNaN(float64(weight)) {
 		return 0
 	}
 
-	return weight
+	return float32(weight)
 }
