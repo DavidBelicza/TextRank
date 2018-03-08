@@ -245,7 +245,7 @@ algorithm by Algorithm interface and use it instead of defaults.
 		// Default Language for filtering stop words.
 		language := textrank.NewDefaultLanguage()
 		// Using a little bit more complex algorithm to ranking text.
-		algorithmMix := textrank.NewMixedAlgorithm()
+		algorithmMix := textrank.NewChainAlgorithm()
 
 		// Add text.
 		tr.Populate(rawText, language, rule)
@@ -294,7 +294,7 @@ processes.
 		tr2 := textrank.NewTextRank()
 
 		// Using a little bit more complex algorithm to ranking text.
-		algorithmMix := textrank.NewMixedAlgorithm()
+		algorithmMix := textrank.NewChainAlgorithm()
 
 		// Add text to the second graph.
 		tr2.Populate(rawText, language, rule)
