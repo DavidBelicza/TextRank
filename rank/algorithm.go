@@ -37,10 +37,6 @@ func (a *AlgorithmDefault) WeightingRelation(
 ) float32 {
 	relationQty := rank.Relation.Node[word1ID][word2ID].Qty
 
-	if math.IsNaN(float64(relationQty)) {
-		return 0
-	}
-
 	return float32(relationQty)
 }
 
@@ -50,10 +46,6 @@ func (a *AlgorithmDefault) WeightingHits(
 	rank *Rank,
 ) float32 {
 	weight := rank.Words[wordID].Qty
-
-	if math.IsNaN(float64(weight)) {
-		return 0
-	}
 
 	return float32(weight)
 }
@@ -82,10 +74,6 @@ func (a *AlgorithmChain) WeightingRelation(
 	qDiff := float32(math.Abs(float64(word1Qty)-float64(word2Qty))) / 100
 	weight := float32(relationQty) + qDiff
 
-	if math.IsNaN(float64(weight)) {
-		return 0
-	}
-
 	return weight
 }
 
@@ -106,10 +94,6 @@ func (a *AlgorithmChain) WeightingHits(
 	}
 
 	weight := float32(word.Qty) + (float32(qty))
-
-	if math.IsNaN(float64(weight)) {
-		return 0
-	}
 
 	return float32(weight)
 }
