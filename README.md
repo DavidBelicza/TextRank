@@ -1,13 +1,35 @@
-# TextRank on Go
+<h1 align="center">
+TextRank on Go
+</h1>
 
-[![GoDoc](https://godoc.org/github.com/DavidBelicza/TextRank?status.svg)](https://godoc.org/github.com/DavidBelicza/TextRank)
-[![License: MIT](https://img.shields.io/badge/License-MIT-ee00ee.svg)](https://github.com/DavidBelicza/TextRank/blob/master/LICENSE)
-[![Build Status](https://travis-ci.org/DavidBelicza/TextRank.svg?branch=master)](https://travis-ci.org/DavidBelicza/TextRank)
-[![Go Report Card](https://goreportcard.com/badge/github.com/DavidBelicza/TextRank)](https://goreportcard.com/report/github.com/DavidBelicza/TextRank)
-[![Coverage Status](https://coveralls.io/repos/github/DavidBelicza/TextRank/badge.svg?branch=master)](https://coveralls.io/github/DavidBelicza/TextRank?branch=master)
+<p align="center">
+	<a href="https://godoc.org/github.com/DavidBelicza/TextRank">
+		<img src="https://godoc.org/github.com/DavidBelicza/TextRank?status.svg" alt="GoDoc" />
+	</a>
+	<a href="https://github.com/DavidBelicza/TextRank/blob/master/LICENSE">
+		<img src="https://img.shields.io/badge/License-MIT-ee00ee.svg" alt="License: MIT" />
+	</a>
+	<a href="https://travis-ci.org/DavidBelicza/TextRank">
+		<img src="https://travis-ci.org/DavidBelicza/TextRank.svg?branch=master" alt="Build Status" />
+	</a>
+	<a href="https://goreportcard.com/report/github.com/DavidBelicza/TextRank">
+		<img src="https://goreportcard.com/badge/github.com/DavidBelicza/TextRank" alt="Go Report Card" />
+	</a>
+	<a href="https://coveralls.io/github/DavidBelicza/TextRank?branch=master">
+		<img src="https://coveralls.io/repos/github/DavidBelicza/TextRank/badge.svg?branch=master" alt="Coverage Status" />
+	</a>
+	<a href="https://github.com/DavidBelicza/TextRank/releases/latest">
+		<img src="https://img.shields.io/github/release/DavidBelicza/TextRank.svg?colorB=269aca" alt="Release" />
+	</a>
+	
+</p>
 
-This source code is an implementation of textrank algorithm, under MIT licence. The minimum requred Go version is 1.8.
-
+<p align="center">
+This source code is an implementation of textrank algorithm, under MIT licence.
+<br />The minimum requred Go version is 1.8.
+<p align="center">
+<br />	
+	
 ## MOTIVATION
 
 If there was a program what could rank book size text's words, phrases and sentences continuously on multiple threads and it would be opened to modifing by objects, written in a simple, secure, static language and if it would be very well documented... Now, here it is.
