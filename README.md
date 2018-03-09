@@ -519,4 +519,4 @@ func main() {
 
 The below image is a representation how works the simplest text ranking algorithm. This algorithm can be replaced by an another one by inject different Algorithm interface implementation.
 
-<img src="https://imgur.com/RUdDfBz" />
+<img src="https://i.imgur.com/RUdDfBz.jpg" />
