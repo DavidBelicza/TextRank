@@ -17,8 +17,8 @@ package rank
 //
 // WordValID contains words. Index is the word/token, value is the ID.
 type Rank struct {
-	Max         int
-	Min         int
+	Max         float32
+	Min         float32
 	Relation    Relation
 	SentenceMap map[int]string
 	Words       map[int]*Word

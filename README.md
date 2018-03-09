@@ -27,6 +27,45 @@ If there was a program what could rank book size text's words, phrases and sente
 * Parser can be modified by interface implementation.
 * Multi thread support.
 
+## INSTALL
+
+You can install TextRank by Go's get:
+
+```go get github.com/DavidBelicza/TextRank```
+
+TextRank uses the DEP as vendoring tool, so the required dependencies are versioned under the **vendor** folder. The exact version number defined in the Gopkg.toml. If you want to reinstall the dependencies, use the DEP functions: flush the vendor folder and run:
+
+```dep ensure```
+
+
+## HOW DOES IT WORK
+
+Too see how does it work, the easiest way is to use the sample text. Sample text can be found in the [textrank_test.go file at this line](https://github.com/DavidBelicza/TextRank/blob/master/textrank_test.go#L12). It's a short size text about Gnome Shell.
+
+* TextRank reads the text, 
+    * parse it, 
+    * remove the unnecessary stop words,
+    * tokenize it 
+* and counting the occurrence of the words and phrases 
+* and then it starts weighting
+    * by the occurrence of words and phrases and their relations. 
+* After weights are done, TextRank normalize weights to between 1 and 0.
+* Then the different finder methods capable to find the most important words, phrases or sentences.
+
+The most important phrases from the sample text are:
+
+Phrase | Occurrence | Weight
+--- | --- | ---
+gnome - shell | 5 | 1
+extension - gnome | 3 | 0.50859946
+icons - tray | 3 | 0.49631447
+gnome - caffeine | 2 | 0.27027023
+
+The **gnome** is the most often used word in this text and **shell** is also used multiple times. Two of them are used together as a phrase 5 times. This is the highest occurrence in this text, so this is the most important phrase.
+
+The following two important phrases have same occurrence 3, however they are not equal. This is because the **extension gnome** phrase contains the word **gnome**, the most popular word in the text, and it increases the phrase's weight. It increases the weight of any word what is related to it, but not too much to overcome other important phrases what don't contain the **gnome** word.
+
+The exact algorithm can be found in the [algorithm.go file at this line](https://github.com/DavidBelicza/TextRank/blob/master/rank/algorithm.go#L65).
 
 ## TEXTRANK OR AUTOMATIC SUMMARIZATION
 > Automatic summarization is the process of reducing a text document with a computer program in order to create a summary that retains the most important points of the original document. Technologies that can make a coherent summary take into account variables such as length, writing style and syntax. Automatic data summarization is part of machine learning and data mining. The main idea of summarization is to find a representative subset of the data, which contains the information of the entire set. Summarization technologies are used in a large number of sectors in industry today. - Wikipedia
@@ -254,12 +293,12 @@ func main() {
 	// Default Language for filtering stop words.
 	language := textrank.NewDefaultLanguage()
 	// Using a little bit more complex algorithm to ranking text.
-	algorithmMix := textrank.NewMixedAlgorithm()
+	algorithmChain := textrank.NewChainAlgorithm()
 
 	// Add text.
 	tr.Populate(rawText, language, rule)
 	// Run the ranking.
-	tr.Ranking(algorithmMix)
+	tr.Ranking(algorithmChain)
 
 	// Get all phrases by weight.
 	rankedPhrases := textrank.FindPhrases(tr)
@@ -304,12 +343,12 @@ func main() {
 	tr2 := textrank.NewTextRank()
 
 	// Using a little bit more complex algorithm to ranking text.
-	algorithmMix := textrank.NewMixedAlgorithm()
+	algorithmChain := textrank.NewChainAlgorithm()
 
 	// Add text to the second graph.
 	tr2.Populate(rawText, language, rule)
 	// Run the ranking on the second graph.
-	tr2.Ranking(algorithmMix)
+	tr2.Ranking(algorithmChain)
 
 	// Get all phrases by weight from first graph.
 	rankedPhrases := textrank.FindPhrases(tr1)

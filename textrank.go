@@ -49,13 +49,13 @@ func NewDefaultAlgorithm() *rank.AlgorithmDefault {
 	return rank.NewAlgorithmDefault()
 }
 
-// NewMixedAlgorithm function retrieves an Algorithm object. It defines how
+// NewChainAlgorithm function retrieves an Algorithm object. It defines how
 // should work the text ranking algorithm, the weighting. This is an alternative
 // way to ranking words by weighting the number of the words. Because Algorithm
 // is an interface it's possible to modify the ranking algorithm by inject
 // different implementation. This is  the 4th step to use TextRank.
-func NewMixedAlgorithm() *rank.AlgorithmMixed {
-	return rank.NewAlgorithmMixed()
+func NewChainAlgorithm() *rank.AlgorithmChain {
+	return rank.NewAlgorithmChain()
 }
 
 // Populate method adds a raw text to the text-ranking graph. It parses,

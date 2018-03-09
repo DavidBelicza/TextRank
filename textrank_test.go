@@ -21,10 +21,10 @@ func TestOnSingleThread(t *testing.T) {
 
 	assertTheGnomeTestTextDefault(t, tr)
 
-	algorithmMix := NewMixedAlgorithm()
-	tr.Ranking(algorithmMix)
+	algorithmChain := NewChainAlgorithm()
+	tr.Ranking(algorithmChain)
 
-	assertTheGnomeTestTextMix(t, tr)
+	assertTheGnomeTestTextChain(t, tr)
 }
 
 func TestOnMultiThread(t *testing.T) {
@@ -162,23 +162,17 @@ func assertTheGnomeTestTextDefault(t *testing.T, textRank *TextRank) {
 	assert.Equal(t, foundSentences[0].Value, rankForCheck.SentenceMap[foundSentences[0].ID])
 }
 
-func assertTheGnomeTestTextMix(t *testing.T, textRank *TextRank) {
+func assertTheGnomeTestTextChain(t *testing.T, textRank *TextRank) {
 	mostPopulars := []string{
 		"gnome shell",
+		"extension gnome",
+		"icons tray",
 		"gnome caffeine",
-		"gnome commonly",
-		"gnome favourite",
-		"gnome terminal",
-		"gnome way",
-		"gnome tray",
-		"gnome extensions",
-		"gnome supports",
-		"gnome used",
-		"gnome dash",
-		"gnome desktop",
-		"gnome takes",
-		"gnome left",
-		"gnome peeve",
+		"key tab",
+		"key changed",
+		"overlay activities",
+		"auto suspend",
+		"dock dash",
 	}
 
 	phrases := FindPhrases(textRank)

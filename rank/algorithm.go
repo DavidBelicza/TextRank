@@ -1,6 +1,8 @@
 package rank
 
-import "math"
+import (
+	"math"
+)
 
 // Algorithm interface and its methods make possible the polimorf usage of
 // weighting process.
@@ -8,25 +10,17 @@ type Algorithm interface {
 	WeightingRelation(
 		word1ID int,
 		word2ID int,
-		relationQty int,
-		relationMin int,
-		relationMax int,
-		word1Qty int,
-		word2Qty int,
-		wordQtyMin int,
-		wordQtyMax int,
+		rank *Rank,
 	) float32
 
 	WeightingHits(
 		wordID int,
-		wordQty int,
-		wordMin int,
-		wordMax int,
+		rank *Rank,
 	) float32
 }
 
 // AlgorithmDefault struct is the basic implementation of Algorithm. It can
-// weight and normalize a word or phrase by comparing them.
+// weight a word or phrase by comparing them.
 type AlgorithmDefault struct{}
 
 // NewAlgorithmDefault constructor retrieves an AlgorithmDefault pointer.
@@ -35,95 +29,71 @@ func NewAlgorithmDefault() *AlgorithmDefault {
 }
 
 // WeightingRelation method is the traditional algorithm of text rank to
-// weighting and normalizing a phrase. It always retrieves a float number
-// between 0.00 and 1.00.
+// weighting a phrase.
 func (a *AlgorithmDefault) WeightingRelation(
 	word1ID int,
 	word2ID int,
-	relationQty int,
-	relationMin int,
-	relationMax int,
-	word1Qty int,
-	word2Qty int,
-	wordQtyMin int,
-	wordQtyMax int,
+	rank *Rank,
 ) float32 {
-	weight := (float32(relationQty) - float32(relationMin)) / (float32(relationMax) - float32(relationMin))
+	relationQty := rank.Relation.Node[word1ID][word2ID].Qty
 
-	if math.IsNaN(float64(weight)) {
-		return 0
-	}
-
-	return weight
+	return float32(relationQty)
 }
 
-// WeightingHits method ranks the words by their number of usage. It always
-// retrieves a float number between 0.00 and 1.00.
+// WeightingHits method ranks the words by their occurrence.
 func (a *AlgorithmDefault) WeightingHits(
 	wordID int,
-	wordQty int,
-	wordMin int,
-	wordMax int,
+	rank *Rank,
 ) float32 {
-	weight := (float32(wordQty) - float32(wordMin)) / (float32(wordMax) - float32(wordMin))
+	weight := rank.Words[wordID].Qty
 
-	if math.IsNaN(float64(weight)) {
-		return 0
-	}
-
-	return weight
+	return float32(weight)
 }
 
-// AlgorithmMixed struct is the combined implementation of Algorithm. A good
-// example how weighting can be changed by a different implementations. It can
-// weight and normalize a word or phrase by comparing them.
-type AlgorithmMixed struct{}
+// AlgorithmChain struct is the combined implementation of Algorithm. It is a
+// good example how weighting can be changed by a different implementations. It
+// can weight a word or phrase by comparing them.
+type AlgorithmChain struct{}
 
-// NewAlgorithmMixed constructor retrieves an AlgorithmMixed pointer.
-func NewAlgorithmMixed() *AlgorithmMixed {
-	return &AlgorithmMixed{}
+// NewAlgorithmChain constructor retrieves an AlgorithmChain pointer.
+func NewAlgorithmChain() *AlgorithmChain {
+	return &AlgorithmChain{}
 }
 
 // WeightingRelation method is a combined algorithm of text rank and word
-// intensity it weights and normalizes a phrase. It always retrieves a float
-// number between 0.00 and 1.00.
-func (a *AlgorithmMixed) WeightingRelation(
+// occurrence, it weights a phrase.
+func (a *AlgorithmChain) WeightingRelation(
 	word1ID int,
 	word2ID int,
-	relationQty int,
-	relationMin int,
-	relationMax int,
-	word1Qty int,
-	word2Qty int,
-	wordQtyMin int,
-	wordQtyMax int,
+	rank *Rank,
 ) float32 {
-	min := float32(relationMin + wordQtyMin)
-	max := float32(relationMax + wordQtyMax)
-	qty := float32(relationQty + word1Qty)
+	relationQty := rank.Relation.Node[word1ID][word2ID].Qty
+	word1Qty := rank.Words[word1ID].Qty
+	word2Qty := rank.Words[word2ID].Qty
 
-	weight := (qty - min) / (max - min)
-
-	if math.IsNaN(float64(weight)) {
-		return 0
-	}
+	qDiff := float32(math.Abs(float64(word1Qty)-float64(word2Qty))) / 100
+	weight := float32(relationQty) + qDiff
 
 	return weight
 }
 
-// WeightingHits method ranks the words by their number of usage. It always
-// retrieves a float number between 0.00 and 1.00.
-func (a *AlgorithmMixed) WeightingHits(
+// WeightingHits method ranks the words by their occurrence.
+func (a *AlgorithmChain) WeightingHits(
 	wordID int,
-	wordQty int,
-	wordMin int,
-	wordMax int,
+	rank *Rank,
 ) float32 {
-	weight := (float32(wordQty) - float32(wordMin)) / (float32(wordMax) - float32(wordMin))
+	word := rank.Words[wordID]
+	qty := 0
 
-	if math.IsNaN(float64(weight)) {
-		return 0
+	for leftWordID, leftWordQty := range word.ConnectionLeft {
+		qty += rank.Words[leftWordID].Qty * leftWordQty
 	}
 
-	return weight
+	for rightWordID, rightWordQty := range word.ConnectionRight {
+		qty += rank.Words[rightWordID].Qty * rightWordQty
+	}
+
+	weight := float32(word.Qty) + (float32(qty))
+
+	return float32(weight)
 }
