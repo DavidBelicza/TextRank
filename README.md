@@ -59,6 +59,27 @@ TextRank uses the DEP as vendoring tool, so the required dependencies are versio
 
 ```dep ensure```
 
+## DOCKER
+
+Using Docker to TextRank isn't necessary, it's just an option.
+
+Build image from the repository's root directory:
+
+```docker build -t go_text_rank_image .```
+
+Create container from the image:
+
+```docker run -dit --name textrank go_text_rank_image:latest```
+
+Run the **go test -v .** code inside the container:
+
+```docker exec -i -t textrank go test -v .```
+
+Stop, start or remove the container:
+
+* ```docker stop textrank```
+* ```docker start textrank```
+* ```docker rm textrank```
 
 ## HOW DOES IT WORK
 
