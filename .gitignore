@@ -1,5 +1,6 @@
-/.vscode
 /.idea
-/pkg
+/.vscode
 /bin
+/pkg
+/vendor
 /install.sh
