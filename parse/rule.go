@@ -10,14 +10,14 @@ type Rule interface {
 // RuleDefault struct implements the Rule interface. It contains the separator
 // characters and can decide a character is separator or not.
 type RuleDefault struct {
-	wordSeparators     [18]string
+	wordSeparators     [21]string
 	sentenceSeparators [3]string
 }
 
 // NewRule constructor retrieves a RuleDefault pointer.
 func NewRule() *RuleDefault {
 	return &RuleDefault{
-		[18]string{" ", ",", ")", "(", "[", "]", "{", "}", "\"", ";", "\n", ">", "<", "%", "@", "&", "=", "#"},
+		[21]string{" ", ",", "'", "’", "\"", ")", "(", "[", "]", "{", "}", "\"", ";", "\n", ">", "<", "%", "@", "&", "=", "#"},
 		[3]string{"!", ".", "?"},
 	}
 }
