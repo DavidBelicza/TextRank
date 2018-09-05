@@ -34,6 +34,10 @@ This source code is an implementation of textrank algorithm, under MIT licence.
 
 If there was a program what could rank book size text's words, phrases and sentences continuously on multiple threads and it would be opened to modifing by objects, written in a simple, secure, static language and if it would be very well documented... Now, here it is.
 
+## DEMO
+
+The following link *Recona* is a simple, pre-programmed a.i. what uses this library to ranking raw texts. It visualizes how ranking works and it represents how it could be used for different purposes: **[Recona.app](https://recona.app)**
+
 ## FEATURES
 
 * Find the most important phrases.
