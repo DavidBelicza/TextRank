@@ -4,7 +4,7 @@ package rank
 //
 // Max is the occurrence of the most used phrase.
 //
-// Min is the occurrence of the less used phrase. It is always greater then 0.ű
+// Min is the occurrence of the less used phrase. It is always greater then 0.
 //
 // Node is contains the Scores. Firs ID is the word 1, second ID is the word 2,
 // and the value is the Score what contains the data about their relation.
