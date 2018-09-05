@@ -14,7 +14,7 @@ func TextToRank(sentence parse.ParsedSentence, lang Language, ranks *rank.Rank) 
 
 func addWord(ranks *rank.Rank, words []string, lang Language, sentenceID int) {
 	prevWordID := -1
-	curWordID := -1
+	var curWordID int
 
 	for _, word := range words {
 		if !lang.IsStopWord(word) {
