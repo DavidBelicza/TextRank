@@ -18,6 +18,10 @@ func addWord(ranks *rank.Rank, words []string, lang Language, sentenceID int) {
 
 	for _, word := range words {
 		if !lang.IsStopWord(word) {
+			if found, rootWord := lang.FindRootWord(word); found {
+				word = rootWord
+			}
+
 			if !ranks.IsWordExist(word) {
 				curWordID = ranks.AddNewWord(word, prevWordID, sentenceID)
 			} else {

@@ -6,6 +6,7 @@ import "unicode/utf8"
 // language specific features by custom implementations.
 type Language interface {
 	IsStopWord(word string) bool
+	FindRootWord(word string) (bool, string)
 	SetActiveLanguage(code string)
 	SetWords(code string, words []string)
 }
@@ -48,6 +49,13 @@ func (lang *LanguageDefault) IsStopWord(word string) bool {
 	}
 
 	return false
+}
+
+// FindRootWord method gets a word as an input, "apples" for example and it
+// retrieves the root-word of this given word, "apple" for example. The first
+// return parameter is true when a word-root has found, otherwise it's false.
+func (lang *LanguageDefault) FindRootWord(word string) (bool, string) {
+	return false, ""
 }
 
 // SetActiveLanguage method switch between languages by the language's code. The
