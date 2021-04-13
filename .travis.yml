@@ -1,9 +1,5 @@
 language: go
 sudo: false
-
-os:
-  - linux
-  - osx
   
 matrix:
   include:
