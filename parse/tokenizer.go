@@ -14,21 +14,21 @@ func findSentences(rawText string, rule Rule) Text {
 	text := Text{}
 
 	var sentence string
+	var i int
+	slen := len(rawText)
 
-	for _, chr := range rawText {
-		if !rule.IsSentenceSeparator(chr) {
-			sentence = sentence + string(chr)
-		} else if len(sentence) > 0 {
-			sentence = sentence + string(chr)
-
-			text.Append(sentence, findWords(sentence, rule))
+	for j, chr := range rawText {
+		j += len(string(chr))
+		//when separator or the last
+		if rule.IsSentenceSeparator(chr) || j == slen {
+			sentence = rawText[i:j]
+			if len(sentence) > 0 {
+				text.Append(sentence, findWords(sentence, rule))
+			}
 
 			sentence = ""
+			i = j
 		}
-	}
-
-	if len(sentence) > 0 {
-		text.Append(sentence, findWords(sentence, rule))
 	}
 
 	return text
@@ -38,18 +38,25 @@ func findWords(rawSentence string, rule Rule) (words []string) {
 	words = []string{}
 
 	var word string
+	var i int
+	slen := len(rawSentence)
 
-	for _, chr := range rawSentence {
-		if !rule.IsWordSeparator(chr) {
-			word = word + string(chr)
-		} else if len(word) > 0 {
-			words = append(words, strings.ToLower(word))
+	for j, chr := range rawSentence {
+		chrlen := len(string(chr))
+		j += chrlen
+		//when separator or the last
+		if sep := rule.IsWordSeparator(chr); sep || j == slen {
+			if sep {
+				word = rawSentence[i : j-chrlen]
+			} else {
+				word = rawSentence[i:j]
+			}
+			if len(word) > 0 {
+				words = append(words, strings.ToLower(word))
+			}
 			word = ""
+			i = j
 		}
-	}
-
-	if len(word) > 0 {
-		words = append(words, strings.ToLower(word))
 	}
 
 	return
