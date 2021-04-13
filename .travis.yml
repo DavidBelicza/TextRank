@@ -7,4 +7,4 @@ matrix:
   
 script:
   - go mod vendor
-  - go test
+  - go test ./...
