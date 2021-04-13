@@ -34,10 +34,6 @@ This source code is an implementation of textrank algorithm, under MIT licence.
 
 If there was a program what could rank book size text's words, phrases and sentences continuously on multiple threads and it would be opened to modifing by objects, written in a simple, secure, static language and if it would be very well documented... Now, here it is.
 
-## DEMO
-
-The following link *Recona* is a simple, pre-programmed a.i. what uses this library to ranking raw texts. It visualizes how ranking works and it represents how it could be used for different purposes: **[Recona.app](https://recona.app)**
-
 ## FEATURES
 
 * Find the most important phrases.
@@ -59,9 +55,9 @@ You can install TextRank by Go's get:
 
 ```go get github.com/DavidBelicza/TextRank```
 
-TextRank uses the DEP as vendoring tool, so the required dependencies are versioned under the **vendor** folder. The exact version number defined in the Gopkg.toml. If you want to reinstall the dependencies, use the DEP functions: flush the vendor folder and run:
+TextRank uses the default Go *mod* as vendoring tool, so you can install the dependencies with this command:
 
-```dep ensure```
+```go mod vendor```
 
 ## DOCKER
 
