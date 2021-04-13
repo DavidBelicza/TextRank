@@ -8,11 +8,7 @@ os:
 matrix:
   include:
     - go: "1.15"
-
-before_install:
-  - go get github.com/mattn/goveralls
   
 script:
   - go mod vendor
   - go test
-  - bin/goveralls -service=travis-ci 
