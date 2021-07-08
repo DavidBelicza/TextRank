@@ -53,7 +53,7 @@ If there was a program what could rank book size text's words, phrases and sente
 
 You can install TextRank by Go's get:
 
-```go get github.com/DavidBelicza/TextRank```
+```go get github.com/DavidBelicza/TextRank/v2```
 
 TextRank uses the default Go *mod* as vendoring tool, so you can install the dependencies with this command:
 
