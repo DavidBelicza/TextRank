@@ -1,8 +1,8 @@
 package convert
 
 import (
-	"github.com/DavidBelicza/TextRank/parse"
-	"github.com/DavidBelicza/TextRank/rank"
+	"github.com/DavidBelicza/TextRank/v2/parse"
+	"github.com/DavidBelicza/TextRank/v2/rank"
 )
 
 // TextToRank function converts a ParsedSentence object to Rank object, it is

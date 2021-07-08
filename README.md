@@ -125,7 +125,7 @@ package main
 import (
 	"fmt"
 	
-	"github.com/DavidBelicza/TextRank"
+	"github.com/DavidBelicza/TextRank/v2"
 )
 
 func main() {
@@ -164,7 +164,7 @@ package main
 import (
 	"fmt"
 	
-	"github.com/DavidBelicza/TextRank"
+	"github.com/DavidBelicza/TextRank/v2"
 )
 
 func main() {
@@ -225,7 +225,7 @@ package main
 import (
 	"fmt"
 	
-	"github.com/DavidBelicza/TextRank"
+	"github.com/DavidBelicza/TextRank/v2"
 )
 
 func main() {
@@ -275,7 +275,7 @@ package main
 import (
 	"fmt"
 	
-	"github.com/DavidBelicza/TextRank"
+	"github.com/DavidBelicza/TextRank/v2"
 )
 
 func main() {
@@ -324,7 +324,7 @@ package main
 import (
 	"fmt"
 	
-	"github.com/DavidBelicza/TextRank"
+	"github.com/DavidBelicza/TextRank/v2"
 )
 
 func main() {
@@ -363,7 +363,7 @@ package main
 import (
 	"fmt"
 	
-	"github.com/DavidBelicza/TextRank"
+	"github.com/DavidBelicza/TextRank/v2"
 )
 
 func main() {
@@ -421,7 +421,7 @@ package main
 import (
 	"fmt"
 	
-	"github.com/DavidBelicza/TextRank"
+	"github.com/DavidBelicza/TextRank/v2"
 )
 
 func main() {
@@ -467,7 +467,7 @@ import (
 	"fmt"
 	"time"
 	
-	"github.com/DavidBelicza/TextRank"
+	"github.com/DavidBelicza/TextRank/v2"
 )
 
 func main() {

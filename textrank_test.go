@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/DavidBelicza/TextRank/rank"
+	"github.com/DavidBelicza/TextRank/v2/rank"
 	"github.com/stretchr/testify/assert"
 )
 
