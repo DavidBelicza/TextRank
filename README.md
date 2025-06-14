@@ -25,14 +25,14 @@ TextRank on Go
 </p>
 
 <p align="center">
-This source code is an implementation of textrank algorithm, under MIT licence.
-<br />The minimum requred Go version is 1.8.
+This source code is an implementation of the TextRank algorithm under the MIT license.
+<br />The minimum required Go version is 1.8.
 <p align="center">
 <br />	
 	
 ## MOTIVATION
 
-If there was a program what could rank book size text's words, phrases and sentences continuously on multiple threads and it would be opened to modifing by objects, written in a simple, secure, static language and if it would be very well documented... Now, here it is.
+Imagine a program that can continuously rank the words, phrases, and sentences of a book-sized text across multiple threads, can be modified through objects, is written in a simple, secure, static language, and is very well documented... Now, here it is.
 
 ## FEATURES
 
@@ -47,21 +47,21 @@ If there was a program what could rank book size text's words, phrases and sente
 * Support more languages.
 * Algorithm for weighting can be modified by interface implementation.
 * Parser can be modified by interface implementation.
-* Multi thread support.
+* Multi-thread support.
 
 ## INSTALL
 
-You can install TextRank by Go's get:
+You can install TextRank using `go get`:
 
 ```go get github.com/DavidBelicza/TextRank/v2```
 
-TextRank uses the default Go *mod* as vendoring tool, so you can install the dependencies with this command:
+TextRank uses Go modules for vendoring, so you can install the dependencies with this command:
 
 ```go mod vendor```
 
 ## DOCKER
 
-Using Docker to TextRank isn't necessary, it's just an option.
+Using Docker with TextRank isn't necessary; it's just an option.
 
 Build image from the repository's root directory:
 
@@ -83,17 +83,17 @@ Stop, start or remove the container:
 
 ## HOW DOES IT WORK
 
-Too see how does it work, the easiest way is to use the sample text. Sample text can be found in the [textrank_test.go file at this line](https://github.com/DavidBelicza/TextRank/blob/master/textrank_test.go#L12). It's a short size text about Gnome Shell.
+To see how it works, the easiest way is to use the sample text. You can find it in the [textrank_test.go file at this line](https://github.com/DavidBelicza/TextRank/blob/master/textrank_test.go#L12). It's a short text about Gnome Shell.
 
-* TextRank reads the text, 
-    * parse it, 
-    * remove the unnecessary stop words,
-    * tokenize it 
-* and counting the occurrence of the words and phrases 
-* and then it starts weighting
-    * by the occurrence of words and phrases and their relations. 
-* After weights are done, TextRank normalize weights to between 1 and 0.
-* Then the different finder methods capable to find the most important words, phrases or sentences.
+* TextRank reads the text,
+    * parses it,
+    * removes the unnecessary stop words,
+    * tokenizes it
+* and counts the occurrences of the words and phrases
+* then it starts weighting
+    * by the occurrence of words and phrases and their relations
+* After weights are done, TextRank normalizes them between 1 and 0
+* Then the different finder methods can find the most important words, phrases, or sentences
 
 The most important phrases from the sample text are:
 
@@ -104,9 +104,9 @@ extension - gnome | 3 | 0.50859946
 icons - tray | 3 | 0.49631447
 gnome - caffeine | 2 | 0.27027023
 
-The **gnome** is the most often used word in this text and **shell** is also used multiple times. Two of them are used together as a phrase 5 times. This is the highest occurrence in this text, so this is the most important phrase.
+The word **gnome** appears most often in this text and **shell** is also used multiple times. Together they form a phrase used five times. This is the highest occurrence in the text, so it is the most important phrase.
 
-The following two important phrases have same occurrence 3, however they are not equal. This is because the **extension gnome** phrase contains the word **gnome**, the most popular word in the text, and it increases the phrase's weight. It increases the weight of any word what is related to it, but not too much to overcome other important phrases what don't contain the **gnome** word.
+The next two important phrases each occur three times, but they are not equal. The phrase **extension gnome** contains the word **gnome**, the most popular word in the text, which increases its weight. This increase also affects related words but not enough to outrank other important phrases that don't contain **gnome**.
 
 The exact algorithm can be found in the [algorithm.go file at this line](https://github.com/DavidBelicza/TextRank/blob/master/rank/algorithm.go#L65).
 
@@ -117,7 +117,7 @@ The exact algorithm can be found in the [algorithm.go file at this line](https:/
 
 ### Find the most important phrases
 
-This is the most basic and simplest usage of textrank.
+This is the most basic and simplest use of TextRank.
 
 ```go
 package main
@@ -156,7 +156,7 @@ func main() {
 
 ### All possible pre-defined finder queries
 
-After ranking, the graph contains a lot of valuable data. There are functions in textrank package what contains logic to retrieve those data from the graph.
+After ranking, the graph contains a lot of valuable data. The TextRank package provides functions that retrieve this data from the graph.
 
 ```go
 package main
@@ -217,7 +217,7 @@ func main() {
 
 ### Access to everything
 
-After ranking, the graph contains a lot of valuable data. The GetRank function allows access to the graph and every data can be retrieved from this structure.
+After ranking, the graph contains a lot of valuable data. The GetRank function provides access to the graph so every piece of data can be retrieved from this structure.
 
 ```go
 package main
@@ -267,7 +267,7 @@ func main() {
 
 ### Adding text continuously
 
-It is possibe to add more text after another texts already have been added. The Ranking function can merge these multiple texts and it can recalculate the weights and all related data.
+It is possible to add more text after other texts have already been added. The Ranking function can merge these texts and recalculate the weights and related data.
 
 ```go
 package main
@@ -314,9 +314,9 @@ func main() {
 }
 ```
 
-### Using different algorithm to ranking text
+### Using a different algorithm to rank text
 
-There are two algorithm has implemented, it is possible to write custom algorithm by Algorithm interface and use it instead of defaults.
+Two algorithms are implemented, but you can write your own by implementing the Algorithm interface and use it instead of the defaults.
 
 ```go
 package main
@@ -355,7 +355,7 @@ func main() {
 
 ### Using multiple graphs
 
-Graph ID exists because it is possible run multiple independent text ranking processes.
+Graph IDs exist because it is possible to run multiple independent text ranking processes.
 
 ```go
 package main
@@ -413,7 +413,7 @@ func main() {
 
 ### Using different non-English languages
 
-Engish is used by default but it is possible to add any language. To use other languages a stop word list is required what you can find here: https://github.com/stopwords-iso
+English is used by default, but you can add any language. To use other languages, a stop word list is required, which you can find here: https://github.com/stopwords-iso
 
 ```go
 package main
@@ -458,7 +458,7 @@ func main() {
 
 ### Asynchronous usage by goroutines
 
-It is thread safe. Independent graphs can receive texts in the same time and can be extended by more text also in the same time.
+It is thread-safe. Independent graphs can receive text at the same time and can be extended with more text concurrently.
 
 ```go
 package main
@@ -538,6 +538,6 @@ func main() {
 
 ## A SIMPLE VISUAL REPRESENTATION
 
-The below image is a representation how works the simplest text ranking algorithm. This algorithm can be replaced by an another one by inject different Algorithm interface implementation.
+The image below illustrates how the simplest text ranking algorithm works. You can replace this algorithm by injecting a different Algorithm interface implementation.
 
 <img src="https://i.imgur.com/RUdDfBz.jpg" />
