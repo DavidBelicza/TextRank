@@ -62,5 +62,13 @@ func updateRanks(ranks *Rank, algorithm Algorithm) {
 }
 
 func normalize(weight float32, min float32, max float32) float32 {
-	return (weight - min) / (max - min)
+	// avoid NaN when there is only one distinct weight
+	if max != min {
+		return (weight - min) / (max - min)
+	}
+
+	if weight > 0 {
+		return 1
+	}
+	return 0
 }
