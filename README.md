@@ -3,8 +3,8 @@ TextRank on Go
 </h1>
 
 <p align="center">
-	<a href="https://godoc.org/github.com/DavidBelicza/TextRank">
-		<img src="https://godoc.org/github.com/DavidBelicza/TextRank?status.svg" alt="GoDoc" />
+	<a href="https://pkg.go.dev/github.com/DavidBelicza/TextRank/v2">
+		<img src="https://pkg.go.dev/badge/github.com/DavidBelicza/TextRank/v2.svg" alt="Go Reference" />
 	</a>
 	<a href="https://github.com/DavidBelicza/TextRank/blob/master/LICENSE">
 		<img src="https://img.shields.io/badge/License-MIT-ee00ee.svg" alt="License: MIT" />
@@ -30,6 +30,10 @@ This source code is an implementation of the TextRank algorithm under the MIT li
 ## MOTIVATION
 
 Imagine a program that can continuously rank the words, phrases, and sentences of a book-sized text across multiple threads, can be modified through objects, is written in a simple, secure, static language, and is very well documented... Now, here it is.
+
+## TEXTRANK VS. LLMS
+
+GPTs like ChatGPT are supervised language models that understand the context and generate new content from the given input using vast resources while TextRank is a cost-efficient/low-cost text extraction algorithm. TextRank algorithm also can be used as a pre-processor to a GPT model to reduce the text size to save on resource consumption.
 
 ## FEATURES
 
