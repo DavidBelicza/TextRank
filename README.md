@@ -15,8 +15,8 @@ TextRank on Go
 	<a href="https://goreportcard.com/report/github.com/DavidBelicza/TextRank">
 		<img src="https://goreportcard.com/badge/github.com/DavidBelicza/TextRank" alt="Go Report Card" />
 	</a>
-	<a href="https://coveralls.io/github/DavidBelicza/TextRank?branch=master">
-		<img src="https://coveralls.io/repos/github/DavidBelicza/TextRank/badge.svg?branch=master" alt="Coverage Status" />
+	<a href="https://app.codecov.io/gh/DavidBelicza/TextRank">
+		<img src="https://codecov.io/gh/DavidBelicza/TextRank/branch/master/graph/badge.svg" alt="Coverage Status" />
 	</a>
 	<a href="https://github.com/DavidBelicza/TextRank/releases/latest">
 		<img src="https://img.shields.io/github/release/DavidBelicza/TextRank.svg?colorB=269aca" alt="Release" />
