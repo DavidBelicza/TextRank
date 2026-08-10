@@ -69,3 +69,12 @@ func TestTokenizeTextSplitsRegularSentences(t *testing.T) {
 	assert.Equal(t, " He came.", text.parsedSentences[1].original)
 	assert.Equal(t, " She left!", text.parsedSentences[2].original)
 }
+
+func TestTokenizeTextWithAbbreviationAtTheStart(t *testing.T) {
+	rule := NewRule()
+
+	text := TokenizeText("U.S.A is big.", rule)
+
+	assert.Equal(t, 1, len(text.parsedSentences))
+	assert.Equal(t, []string{"u.s.a", "is", "big"}, text.parsedSentences[0].words)
+}

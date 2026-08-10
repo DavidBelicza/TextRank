@@ -12,9 +12,6 @@ TextRank on Go
 	<a href="https://github.com/DavidBelicza/TextRank/actions/workflows/test.yml">
 		<img src="https://github.com/DavidBelicza/TextRank/actions/workflows/test.yml/badge.svg?branch=master" alt="Build Status" />
 	</a>
-	<a href="https://goreportcard.com/report/github.com/DavidBelicza/TextRank">
-		<img src="https://goreportcard.com/badge/github.com/DavidBelicza/TextRank" alt="Go Report Card" />
-	</a>
 	<a href="https://app.codecov.io/gh/DavidBelicza/TextRank">
 		<img src="https://codecov.io/gh/DavidBelicza/TextRank/branch/master/graph/badge.svg" alt="Coverage Status" />
 	</a>
