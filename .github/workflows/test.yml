@@ -1,0 +1,73 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    name: Go latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+
+      - name: Build
+        run: go build ./...
+
+      - name: Vet
+        run: go vet ./...
+
+      - name: Test
+        run: go test -race -covermode=atomic -coverprofile=coverage.out ./...
+
+      - name: Upload coverage profile
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage.out
+
+  legacy:
+    runs-on: ubuntu-latest
+
+    name: Go 1.8
+
+    env:
+      GOPATH: ${{ github.workspace }}/go
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: go/src/github.com/DavidBelicza/TextRank/v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.8"
+
+      - name: Install dependencies
+        run: |
+          go get -d github.com/stretchr/testify/assert
+          git -C "$GOPATH/src/github.com/stretchr/testify" checkout v1.2.1
+
+      - name: Build
+        working-directory: go/src/github.com/DavidBelicza/TextRank/v2
+        run: go build ./...
+
+      - name: Vet
+        working-directory: go/src/github.com/DavidBelicza/TextRank/v2
+        run: go vet ./...
+
+      - name: Test
+        working-directory: go/src/github.com/DavidBelicza/TextRank/v2
+        run: go test ./...

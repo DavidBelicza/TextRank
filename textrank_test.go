@@ -2,7 +2,6 @@ package textrank
 
 import (
 	"testing"
-	"time"
 
 	"github.com/DavidBelicza/TextRank/v2/rank"
 	"github.com/stretchr/testify/assert"
@@ -28,7 +27,7 @@ func TestOnSingleThread(t *testing.T) {
 }
 
 func TestOnMultiThread(t *testing.T) {
-	exitTest := false
+	exitTest := make(chan struct{})
 	stream := make(chan string)
 	tr := NewTextRank()
 
@@ -46,7 +45,7 @@ func TestOnMultiThread(t *testing.T) {
 			tr.Ranking(algorithm)
 
 			if i == 5 {
-				exitTest = true
+				close(exitTest)
 			}
 
 			i++
@@ -67,9 +66,7 @@ func TestOnMultiThread(t *testing.T) {
 		}
 	}()
 
-	for !exitTest {
-		time.Sleep(time.Second * 1)
-	}
+	<-exitTest
 
 	assertTheGnomeTestTextDefault(t, tr)
 }

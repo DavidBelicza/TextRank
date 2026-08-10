@@ -9,8 +9,8 @@ TextRank on Go
 	<a href="https://github.com/DavidBelicza/TextRank/blob/master/LICENSE">
 		<img src="https://img.shields.io/badge/License-MIT-ee00ee.svg" alt="License: MIT" />
 	</a>
-	<a href="https://travis-ci.org/DavidBelicza/TextRank">
-		<img src="https://travis-ci.org/DavidBelicza/TextRank.svg?branch=master" alt="Build Status" />
+	<a href="https://github.com/DavidBelicza/TextRank/actions/workflows/test.yml">
+		<img src="https://github.com/DavidBelicza/TextRank/actions/workflows/test.yml/badge.svg?branch=master" alt="Build Status" />
 	</a>
 	<a href="https://goreportcard.com/report/github.com/DavidBelicza/TextRank">
 		<img src="https://goreportcard.com/badge/github.com/DavidBelicza/TextRank" alt="Go Report Card" />
