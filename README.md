@@ -9,14 +9,11 @@ TextRank on Go
 	<a href="https://github.com/DavidBelicza/TextRank/blob/master/LICENSE">
 		<img src="https://img.shields.io/badge/License-MIT-ee00ee.svg" alt="License: MIT" />
 	</a>
-	<a href="https://travis-ci.org/DavidBelicza/TextRank">
-		<img src="https://travis-ci.org/DavidBelicza/TextRank.svg?branch=master" alt="Build Status" />
+	<a href="https://github.com/DavidBelicza/TextRank/actions/workflows/test.yml">
+		<img src="https://github.com/DavidBelicza/TextRank/actions/workflows/test.yml/badge.svg?branch=master" alt="Build Status" />
 	</a>
-	<a href="https://goreportcard.com/report/github.com/DavidBelicza/TextRank">
-		<img src="https://goreportcard.com/badge/github.com/DavidBelicza/TextRank" alt="Go Report Card" />
-	</a>
-	<a href="https://coveralls.io/github/DavidBelicza/TextRank?branch=master">
-		<img src="https://coveralls.io/repos/github/DavidBelicza/TextRank/badge.svg?branch=master" alt="Coverage Status" />
+	<a href="https://app.codecov.io/gh/DavidBelicza/TextRank">
+		<img src="https://codecov.io/gh/DavidBelicza/TextRank/branch/master/graph/badge.svg" alt="Coverage Status" />
 	</a>
 	<a href="https://github.com/DavidBelicza/TextRank/releases/latest">
 		<img src="https://img.shields.io/github/release/DavidBelicza/TextRank.svg?colorB=269aca" alt="Release" />
