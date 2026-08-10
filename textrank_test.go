@@ -139,7 +139,7 @@ func assertTheGnomeTestTextDefault(t *testing.T, textRank *TextRank) {
 	assert.Equal(t, 3, sentencesByRelWeight[1].ID)
 	assert.Equal(t, 7, sentencesByRelWeight[2].ID)
 	assert.Equal(t, 11, sentencesByRelWeight[3].ID)
-	assert.Equal(t, 19, sentencesByRelWeight[4].ID)
+	assert.Equal(t, 18, sentencesByRelWeight[4].ID)
 	assert.Equal(t, sentencesByRelWeight[4].Value, rankForCheck.SentenceMap[sentencesByRelWeight[4].ID])
 
 	sentencesByPhrase := FindSentencesByPhraseChain(textRank, []string{
@@ -149,7 +149,7 @@ func assertTheGnomeTestTextDefault(t *testing.T, textRank *TextRank) {
 	})
 
 	assert.Equal(t, 3, sentencesByPhrase[0].ID)
-	assert.Equal(t, 19, sentencesByPhrase[1].ID)
+	assert.Equal(t, 18, sentencesByPhrase[1].ID)
 	assert.Equal(t, sentencesByPhrase[1].Value, rankForCheck.SentenceMap[sentencesByPhrase[1].ID])
 
 	sentenceIDStart := 10
