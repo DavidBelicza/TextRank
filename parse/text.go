@@ -12,7 +12,7 @@ type ParsedSentence struct {
 }
 
 // Append method creates a sentence and its words and append them to the Text
-// object.
+// object. Sentences without words are skipped.
 func (text *Text) Append(rawSentence string, words []string) {
 	if len(words) > 0 {
 		parsedSentence := ParsedSentence{
