@@ -1,0 +1,39 @@
+name: Feature request
+description: Suggest a new feature or a change of an existing one.
+labels:
+  - enhancement
+
+body:
+  - type: markdown
+    attributes:
+      value: >
+        New features are discussed before any code is written, so start here
+        instead of opening a pull request.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do
+      description: The use case behind the request, not only the solution.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: How should it work
+      description: >
+        The API you have in mind, if you have one. Mention it here when the
+        change would modify existing exported functions or types.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What did you try instead
+      description: >
+        The existing functions you already looked at and why they did not
+        cover the case.
+    validations:
+      required: false
