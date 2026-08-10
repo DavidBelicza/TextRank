@@ -2,6 +2,8 @@ package parse
 
 import (
 	"strings"
+	"unicode"
+	"unicode/utf8"
 )
 
 // TokenizeText function use the given raw text and parses by a Rule object and
@@ -20,7 +22,8 @@ func findSentences(rawText string, rule Rule) Text {
 	for j, chr := range rawText {
 		j += len(string(chr))
 		//when separator or the last
-		if rule.IsSentenceSeparator(chr) || j == slen {
+		if (rule.IsSentenceSeparator(chr) && !isAbbreviationDot(rawText, chr, j)) ||
+			j == slen {
 			sentence = rawText[i:j]
 			if len(sentence) > 0 {
 				text.Append(sentence, findWords(sentence, rule))
@@ -34,6 +37,38 @@ func findSentences(rawText string, rule Rule) Text {
 	return text
 }
 
+func isAbbreviationDot(text string, chr rune, end int) bool {
+	if chr != '.' {
+		return false
+	}
+
+	next, _ := utf8.DecodeRuneInString(text[end:])
+
+	if isSingleLetterWord(text[:end-1]) && unicode.IsLetter(next) {
+		return true
+	}
+
+	previous, _ := utf8.DecodeLastRuneInString(text[:end-1])
+
+	return unicode.IsDigit(previous) && unicode.IsDigit(next)
+}
+
+func isSingleLetterWord(text string) bool {
+	last, size := utf8.DecodeLastRuneInString(text)
+
+	if !unicode.IsLetter(last) {
+		return false
+	}
+
+	if len(text) == size {
+		return true
+	}
+
+	before, _ := utf8.DecodeLastRuneInString(text[:len(text)-size])
+
+	return unicode.IsSpace(before) || before == '.'
+}
+
 func findWords(rawSentence string, rule Rule) (words []string) {
 	words = []string{}
 
@@ -45,7 +80,10 @@ func findWords(rawSentence string, rule Rule) (words []string) {
 		chrlen := len(string(chr))
 		j += chrlen
 		//when separator or the last
-		if sep := rule.IsWordSeparator(chr); sep || j == slen {
+		sep := rule.IsWordSeparator(chr) &&
+			!isAbbreviationDot(rawSentence, chr, j)
+
+		if sep || j == slen {
 			if sep {
 				word = rawSentence[i : j-chrlen]
 			} else {
